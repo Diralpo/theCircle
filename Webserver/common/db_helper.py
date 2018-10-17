@@ -74,11 +74,7 @@ def login_db(user, pwd, db_name):
 
 ############################
 #  加入新用户
-#  需传入一个字典，包含
-#   id
-#   name
-#   sex     : 性别
-#   contact : 联系方式(可缺少)
+#  需传入一个字典
 def insert_user(db, cursor, user_data):
     try:
         print(user_data)
