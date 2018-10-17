@@ -6,7 +6,7 @@ import smtplib
 from email.utils import formataddr
 from email.mime.multipart import MIMEMultipart
 
-from Webserver.config import const
+from config import const
 
 
 def mail(err_title, text_content_list, sender_nickname='Program', recipient_nickname='Programmer', recipient= const.EMAIL_LIST):

@@ -4,8 +4,8 @@
 import pymysql
 import re
 
-from Webserver.config import const
-from Webserver.common import mail_sent
+from config import const
+from common import mail_sent
 from email.mime.text import MIMEText
 
 #  查找是否具有某数据库

@@ -8,8 +8,8 @@ from flask import request
 from flask_cors import *
 import hashlib
 
-from Webserver.common import db_helper
-from Webserver.config import const
+from common import db_helper
+from config import const
 
 app = Flask(__name__, template_folder='../Webpage/')
 CORS(app, supports_credentials=True)
