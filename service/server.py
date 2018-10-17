@@ -10,6 +10,7 @@ import hashlib
 
 from common import db_helper
 from config import const
+from common import users_helper
 
 app = Flask(__name__, template_folder='../Webpage/')
 CORS(app, supports_credentials=True)
@@ -38,14 +39,14 @@ def get_the_ip():
         user_data['signup_time'] = time.time()
         print('验证邮箱的url为： ' + verified_url)
 
-        db_helper.insert_user(db, cursor, user_data)
+        users_helper.insert_user(db, cursor, user_data)
         return '注册成功，请前往邮箱确认'
 
 
 @app.route('/verification/<verified_url>/', methods=['GET'])
 def user_verify(verified_url):
     #  邮箱验证
-    if db_helper.user_verify(db, cursor, verified_url) == 0:
+    if users_helper.verify_user(db, cursor, verified_url) == 0:
         return "注册成功"
     else:
         return "404 <br/> NOT FOUND"
