@@ -126,7 +126,7 @@ def insert_user(db, cursor, user_data):
                                     <tbody><tr bgcolor="#17212e">
                                         <td style="padding-top: 32px; padding-bottom: 16px;">
                                         <span style="font-size: 24px; color: #66c0f4; font-family: Arial, Helvetica, sans-serif; font-weight: bold;">
-                                            敬爱的 {}，
+                                            亲爱的 {}，
                                         </span><br>
                                         </td>
                                     </tr>

@@ -13,6 +13,7 @@ from config import const
 
 app = Flask(__name__, template_folder='../Webpage/')
 CORS(app, supports_credentials=True)
+db, cursor = db_helper.login_db(const.DB_USER, const.DB_PASS, const.DB_NAME)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -104,5 +105,4 @@ def search():
 
 
 if __name__ == '__main__':
-    db, cursor = db_helper.login_db(const.DB_USER, const.DB_PASS, const.DB_NAME)
     app.run(host=const.SERVER_IP, port=const.SERVER_PORT)
