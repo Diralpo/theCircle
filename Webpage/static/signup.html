@@ -11,7 +11,10 @@
     <script src="/js/loadWeb.js"></script>
 </head>
 <body>
-<nav style="font-size:20px;text-align: center; top: 0px;" id="theNav"></nav>
+<div id="usNav"></div>
+<script>
+    $("#usNav").load("../static/theNav.html")
+</script>
 
 <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
     <input type="text" class="form-control normal-font" placeholder="输入用户名" aria-describedby="_Name" id="username" maxlength="18">
@@ -35,7 +38,6 @@
 
 <div id="theClock" style="font-size:20px;text-align: center;position: fixed; left:0px; bottom:0px; width:100%; background-color: #87CEEB; z-index:9999;"></div>
 <script type="text/javascript">
-    load_nav();
     startTime();
 </script>
 </body>
