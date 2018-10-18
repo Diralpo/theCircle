@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename = 'js/md5.js') }}"></script>
+
+    <link href="{{ url_for('static', filename = 'css/theTable.css') }}" rel="stylesheet">
+
+    <script src="{{ url_for('static', filename = 'js/showTable.js') }}"></script>
+{% endblock %}
+{% block title %}查询{% endblock %}
+
+{% block content %}
+<div >
+    <div id="stu_form_fa" align="center">
+        <button id="stu_query" class="btn btn-default" type="button" onclick="test()">查询</button>
+        <div id="stu_form" align="center" class="theTable">
+            <table>
+                <tr>
+                    <th>Info Header 1</th><th>Info Header 2</th><th>Info Header 3</th>
+                </tr>
+                <tr>
+                    <td>Text 1A</td><td>Text 1B</td><td>Text 1C</td>
+                </tr>
+                <tr>
+                    <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="theClock" style="font-size:20px;text-align: center;position: fixed; left:0px; bottom:0px; width:100%; background-color: #87CEEB; z-index:9999;"></div>
+<script type="text/javascript">
+    startTime();
+</script>
+{% endblock %}
+{% block script_after_body  %}
+<script>
+    function test() {
+        var data={"name":"jiangfeng"};
+        $.ajax({
+            type: 'POST',
+            url:'/search',
+            data:JSON.stringify(data),  //转化字符串
+            contentType: 'application/json; charset=UTF-8',
+            success:function(data_return){ //成功的话，得到消息
+                data = JSON.parse(data_return);
+                var sort = ["姓名", "学号", "性别", "联系方式"];
+                showTable(data, sort);
+            }
+        }
+        );
+    }
+</script>
+{% endblock %}
