@@ -16,7 +16,8 @@
     <script type="text/javascript">
         startTime();
     </script>
-    </body>
+{% endblock %}
+{% block script_after_body  %}
     <script>
         function getLoginInput( ){
             var user = document.getElementById("username").value
@@ -27,7 +28,7 @@
             var data={"name":user, "pwd":pwd};
                     $.ajax({
                         type: 'POST',
-                        url:'http://127.0.0.1:8080/simple',
+                        url:'/login',
                         data:JSON.stringify(data),  //转化字符串
                         contentType: 'application/json; charset=UTF-8',
                         success:function(data_return){ //成功的话，得到消息

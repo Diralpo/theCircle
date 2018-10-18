@@ -1,3 +1,6 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 {% block head %}
     <link href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -11,34 +14,47 @@
     type="image/x-icon">
 {% endblock %}
 <title>{% block title %}Base{% endblock %}</title>
+</head>
+<body>
 {% block navbar %}
-<div class="navbar navbar-inverse" role="navigation" style="background-color: 	#F2FFFF;">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle"
-            data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/" style="display: flex; justify-content: center; align-items: center;  ">
-                <img src="{{ url_for('static', filename = 'favicon.ico') }}" style="width: 40px; "/>
-            </a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li><a href="/user/diralpo/">User</a></li>
-            </ul>
+    <div class="navbar navbar-inverse" role="navigation" style="background-color: #F2FFFF;
+        border-color: white">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle"
+                data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" style="display: flex; justify-content: center; align-items: center;  ">
+                    <img src="{{ url_for('static', filename = 'favicon.ico') }}" style="width: 40px; "/>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/signup">Signup</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/query">Query</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/user/diralpo/">Model</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
 {% block content %}
-<div class="container">
-{% block page_content %}{% endblock %}
-</div>
+    <div class="container">
+    {% block page_content %}{% endblock %}
+    </div>
 {% endblock %}
+</body>
+{% block script_after_body  %}
+{% endblock %}
+</html>
