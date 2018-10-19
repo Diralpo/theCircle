@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/md5.js"></script>
+    <script src="/js/loadWeb.js"></script>
+</head>
+<body>
+<nav style="font-size:20px;text-align: center; top: 0px;" id="theNav"></nav>
+
+<div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
+    <input type="text" class="form-control normal-font" placeholder="输入用户名" aria-describedby="_Name" id="username" maxlength="18">
+</div>
+<div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
+    <input type="password" class="form-control normal-font" placeholder="输入密码" aria-describedby="_Id" id="pwd" maxlength="30">
+</div>
+<div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
+    <input type="text" class="form-control normal-font" placeholder="输入注册邮箱" aria-describedby="_Email" id="user_email" maxlength="30">
+</div>
+<div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
+    <select names="school" class="form-control normal-font" id="user_school">
+        <optgroup label="===请选择你的学校==="></optgroup>
+        <option value ="not_found">NULL</option>
+        <option value ="buaa" selected = "selected" >BUAA</option>
+    </select>
+</div>
+<div style="text-align:center;">
+    <button type="button" class="btn btn-success normal-font" style="width: 500px;margin: 30px" onclick="getSignupInput()">注册</button>
+</div>
+
+<div id="theClock" style="font-size:20px;text-align: center;position: fixed; left:0px; bottom:0px; width:100%; background-color: #87CEEB; z-index:9999;"></div>
+<script type="text/javascript">
+    load_nav();
+    startTime();
+</script>
+</body>
+<script>
+    function getSignupInput( ){
+        var user = document.getElementById("username").value;
+        var pwd = document.getElementById("pwd").value;
+        var school = document.getElementById("user_school").value;
+        var email = document.getElementById("user_email").value;
+        if(user!='' && pwd!='' && school!='' && email!=''){
+            var re = /^([a-zA-Z0-9]+[-_\.]?)+@[a-zA-Z0-9]+\.[a-z]+$/;
+            if (!re.test(email)) {
+                alert('请填入合法邮箱地址')
+            }
+            else{
+                var data = [user, pwd, school, email];
+                test(data)
+            }
+        }
+        else{
+            alert('请补全信息')
+        }
+    }
+    function test(data) {
+        var data={"username": data[0], "pwd": hash = hex_md5(data[1]), 'school': data[2], 'email': data[3]};
+                $.ajax({
+                    type: 'POST',
+                    url:'http://127.0.0.1:8080/signup',
+                    data:JSON.stringify(data),
+                    contentType: 'application/json; charset=UTF-8',
+                    success:function(data_return){
+                        alert(data_return)
+                    }
+                });
+    }
+</script>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>这是主页</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/loadWeb.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div style="text-align:center;">
+    <button type="button" class="btn btn-success normal-font" style="width: 500px;margin: 30px" onclick="Logout()">登出
+    </button>
+</div>
+</body>
+<script>
+    function Logout() {
+        var data = {"logout": true};
+        $.ajax({
+            type: 'POST',
+            url: '/logout',
+            data: JSON.stringify(data),  //转化字符串
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) { //成功的话，得到消息
+                alert(data_return)
+
+            }
+        });
+    }
+</script>
+</html>
