@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>这是主页</title>
+    <title>登录</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="/js/jquery-3.3.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/md5.js"></script>
     <script src="/js/loadWeb.js"></script>
 </head>
 <body>
@@ -14,7 +15,6 @@
 <script>
     $("#usNav").load("../static/theNav.html")
 </script>
-
 
 <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
     <input type="text" class="form-control normal-font" placeholder="输入用户名" aria-describedby="_Name" id="username">
@@ -33,15 +33,15 @@
 </body>
 <script>
     function getLoginInput( ){
-        var user = document.getElementById("username").value
-        var pwd = document.getElementById("pwd").value
+        var user = document.getElementById("username").value;
+        var pwd = document.getElementById("pwd").value;
         test(user, pwd)
     }
     function test(user, pwd) {
-        var data={"name":user, "pwd":pwd};
+        var data={"username": user, "pwd": hash = hex_md5(pwd)};
                 $.ajax({
                     type: 'POST',
-                    url:'http://127.0.0.1:8080/simple',
+                    url:'http://127.0.0.1:8080/signin',
                     data:JSON.stringify(data),  //转化字符串
                     contentType: 'application/json; charset=UTF-8',
                     success:function(data_return){ //成功的话，得到消息
