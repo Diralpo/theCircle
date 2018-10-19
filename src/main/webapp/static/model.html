@@ -13,6 +13,83 @@
 <script>
     $("#theNav").load("/theNav.html")
 </script>
+<div class="row" style="text-align: center;">
+    占位一行
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table">
+                    <caption>Optional table caption.</caption>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
+    <div class="col-md-8">
+        <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
+            <input type="text" class="form-control normal-font" value="test" placeholder="输入用户名" aria-describedby="_Name"
+                   id="username">
+        </div>
+        <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
+            <input type="text" class="form-control normal-font" value="123" placeholder="输入密码" aria-describedby="_Id" id="pwd">
+        </div>
+        <div style="text-align:center;">
+            <button type="button" class="btn btn-success normal-font" style="width: 500px;margin: 30px"
+                    onclick="getLoginInput()">登录
+            </button>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table">
+                    <caption>Optional table caption.</caption>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
