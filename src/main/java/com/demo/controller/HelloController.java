@@ -19,7 +19,7 @@ public class HelloController extends Controller {
         if ("test".equals(map.get("email")) && "123".equals(map.get("password"))) {
             setSessionAttr("username", "test");
             getSession().setAttribute("username", "test");
-    }
+        }
         renderJson("{\"mes\":\"已经登录\"}");
     }
 
