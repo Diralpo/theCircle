@@ -9,10 +9,11 @@
     <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav style="font-size:20px;text-align: center; top: 0;" id="theNav"></nav>
+<nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
 <script>
-    $("#theNav").load("/static/theNav.html")
+    $("#global_header").load("/static/global_header.html")
 </script>
+
 <div class="container">
     <div class="row" style="text-align: center;">
         此处应为推荐游戏，未完成
@@ -26,15 +27,11 @@
                         按类型浏览
                     </div>
                     <a href="/">
-                        免费游玩
+                        游戏
                     </a>
                     <br/>
                     <a href="/">
-                        抢先体验
-                    </a>
-                    <br/>
-                    <a href="/">
-                        休闲
+                        影音
                     </a>
                     <br/>
                     <a href="/">
@@ -75,13 +72,14 @@
     今古悠悠空浪花</pre>
         </div>
     </div>
-    <div class="row" style="text-align: left;">
-        <hr/>
-        <div class="panel panel-default" id="footer_text">
-            <script>
-                $("#footer_text").load("/static/footer_text.html")
-            </script>
-        </div>
+</div>
+
+<div class="container">
+    <hr/>
+    <div id="footer_text">
+        <script>
+            $("#footer_text").load("/static/footer_text.html")
+        </script>
     </div>
 </div>
 </body>

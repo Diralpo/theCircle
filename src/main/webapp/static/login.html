@@ -10,21 +10,30 @@
     <script src="/js/md5.js"></script>
 </head>
 <body>
-<nav style="font-size:20px;text-align: center; top: 0;" id="theNav"></nav>
+<nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
 <script>
-    $("#theNav").load("/static/theNav.html")
+    $("#global_header").load("/static/global_header.html")
 </script>
 
-<div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
-    <input type="text" class="form-control normal-font" placeholder="输入用户名" aria-describedby="_Name" id="username">
+<div class="container">
+    <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
+        <input type="text" class="form-control normal-font" placeholder="输入用户名" aria-describedby="_Name" id="username">
+    </div>
+    <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
+        <input type="text" class="form-control normal-font" placeholder="输入密码" aria-describedby="_Id" id="pwd">
+    </div>
+    <div style="text-align:center;">
+        <button type="button" class="btn btn-success normal-font" style="width: 500px;margin: 30px" onclick="getLoginInput()">登录</button>
+    </div>
 </div>
-<div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
-    <input type="text" class="form-control normal-font" placeholder="输入密码" aria-describedby="_Id" id="pwd">
+<div class="container">
+    <hr/>
+    <div id="footer_text">
+        <script>
+            $("#footer_text").load("/static/footer_text.html")
+        </script>
+    </div>
 </div>
-<div style="text-align:center;">
-    <button type="button" class="btn btn-success normal-font" style="width: 500px;margin: 30px" onclick="getLoginInput()">登录</button>
-</div>
-
 </body>
 <script>
     function getLoginInput( ){
