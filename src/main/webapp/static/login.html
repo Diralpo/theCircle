@@ -28,12 +28,12 @@
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;"
                        placeholder="xxxxxx@example.com">
                 <h4 style="color: purple;margin-top: 30px">密码</h4>
-                <input type="text" id="password"
+                <input type="password" id="password"
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
 
                 <a style="float: right;color: purple;margin-top: 40px">没有账号？立即注册</a>
 
-                <button class="btn btn-default" type="submit"
+                <button class="btn btn-default" type="submit" onclick="getLoginInput()"
                         style="font-size:16px;margin-top: 40px;background-color:purple;color:white;width: 400px;height: 40px">
                     登录
                 </button>
@@ -46,21 +46,22 @@
 </body>
 <script>
     function getLoginInput() {
-        var user = document.getElementById("username").value;
-        var pwd = document.getElementById("pwd").value;
-        test(user, pwd)
+        var user = $("#email").value;
+        var pwd = $("#password").value;
+        login(user, pwd)
     }
 
-    function test(user, pwd) {
+    function login(user, pwd) {
         var data = {"username": user, "pwd": hash = hex_md5(pwd)};
         $.ajax({
             type: 'POST',
-            url: 'http://127.0.0.1:8080/signin',
+            url: '/login',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) { //成功的话，得到消息
-                alert(data_return)
+                alert(data_return);
             }
+
         });
     }
 </script>
