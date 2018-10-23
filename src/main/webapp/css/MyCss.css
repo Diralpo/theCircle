@@ -5,3 +5,14 @@
 .normal-font{
   font-size: 18px;
 }
+
+.navbar-inverse .navbar-nav>li>a {
+  color: black;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: purple;
+    background-color: transparent;
+    border-bottom: 3px solid purple;
+}
+
