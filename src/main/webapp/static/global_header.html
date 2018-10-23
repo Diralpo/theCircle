@@ -12,7 +12,6 @@
     <script src="../js/jquery-3.3.1.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/user_header.js"></script>
     <style type="text/css">
         .center {
             position: absolute;
@@ -60,5 +59,19 @@
             </ul>
         </div>
     </div>
+    <script>
+        //该 js 用于对网页头部用户进行渲染，使用session,用户信息统一存储在session中
+        var userName = sessionStorage.getItem('userName');
+        console.log(userName)
+        if(userName!=null){
+            $('#unlogin').css('display','none')
+            $('#login').css('display','block')
+        }
+        else {
+            $('#unlogin').css('display','block')
+            $('#login').css('display','none')
+        }
+    </script>
 </div>
+
 
