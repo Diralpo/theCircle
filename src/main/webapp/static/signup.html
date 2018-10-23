@@ -2,68 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>注册</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-
-    <script src="/js/jquery-3.3.1.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/md5.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/MyCss.css" rel="stylesheet">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
 <nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
 <script>
-    $("#global_header").load("/static/global_header.html")
+    $("#global_header").load("../static/global_header.html")
 </script>
-<div class="container">
-    <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
-        <input type="text" class="form-control normal-font" placeholder="输入用户名" aria-describedby="_Name" id="username" maxlength="18">
-    </div>
-    <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
-        <input type="password" class="form-control normal-font" placeholder="输入密码" aria-describedby="_Id" id="pwd" maxlength="30">
-    </div>
-    <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
-        <input type="text" class="form-control normal-font" placeholder="输入注册邮箱" aria-describedby="_Email" id="user_email" maxlength="30">
-    </div>
-    <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
-        <select names="school" class="form-control normal-font" id="user_school">
-            <optgroup label="===请选择你的学校==="></optgroup>
-            <option value ="not_found">NULL</option>
-            <option value ="buaa" selected = "selected" >BUAA</option>
-        </select>
-    </div>
-    <div style="text-align:center;">
-        <button type="button" class="btn btn-success normal-font" style="width: 500px;margin: 30px" onclick="getSignupInput()">注册</button>
+
+<div class="container" style="margin-top: 50px">
+    <div class="row">
+        <div class="col-md-4" style="text-align: center"></div>
+        <div class="col-md-4 normal-font">
+            <div id="input-group">
+                <p style="color: purple;font-size: 40px;margin-top: 50px">注册新用户</p>
+                <h4 style="color: purple;margin-top: 30px">邮箱</h4>
+                <input type="text" id="email"
+                       style="width:400px;border:none; border-bottom:3px solid purple;outline: none;"
+                       placeholder="xxxxxx@example.com">
+                <h4 style="color: purple;margin-top: 30px">用户名</h4>
+                <input type="text" id="userName"
+                       style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+                <h4 style="color: purple;margin-top: 30px">密码</h4>
+                <input type="password" id="password"
+                       style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+
+                <h4 style="color: purple;margin-top: 30px">确认密码</h4>
+                <input type="password" id="confirmPassword"
+                       style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+
+                <button class="btn btn-default" type="submit" onclick="getSignupInput()"
+                        style="font-size:16px;margin-top: 40px;background-color:purple;color:white;width: 400px;height: 40px">
+                    确认注册
+                </button>
+
+            </div>
+        </div>
+        <div class="col-md-4" style="text-align: center"></div>
     </div>
 </div>
-<hr/>
-<div class="container">
-    <hr/>
-    <div id="footer_text">
-        <script>
-            $("#footer_text").load("/static/footer_text.html")
-        </script>
-    </div>
-</div>
+
 </body>
 <script>
+    //一个简单的检验例子，待完善，优先度低
     function getSignupInput( ){
-        var user = document.getElementById("username").value;
-        var pwd = document.getElementById("pwd").value;
-        var school = document.getElementById("user_school").value;
-        var email = document.getElementById("user_email").value;
-        if(user!='' && pwd!='' && school!='' && email!=''){
-            var re = /^([a-zA-Z0-9]+[-_\.]?)+@[a-zA-Z0-9]+\.[a-z]+$/;
-            if (!re.test(email)) {
-                alert('请填入合法邮箱地址')
-            }
-            else{
-                var data = [user, pwd, school, email];
-                test(data)
-            }
+        var email = $("#email").val();
+        console.log(email)
+        if(email==''||email==null){
+            var warning=$("<p></p>").text("邮箱地址错误").css("color","purple");
+            $("#email").after(warning)
         }
-        else{
-            alert('请补全信息')
-        }
+
+        var re = /^([a-zA-Z0-9]+[-_\.]?)+@[a-zA-Z0-9]+\.[a-z]+$/;
+
     }
     function test(data) {
         var data={"username": data[0], "pwd": hash = hex_md5(data[1]), 'school': data[2], 'email': data[3]};
