@@ -27,3 +27,17 @@
     border-bottom: 3px solid purple;
 }
 
+#global_feet caption{
+    color: black;
+    font-size: 16px;
+}
+
+#global_feet p{
+     font-size: 14px;
+     color: black;
+}
+
+#global_feet a{
+    font-size: 14px;
+    color: #BA55D3;
+}

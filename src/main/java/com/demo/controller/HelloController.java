@@ -10,7 +10,7 @@ import java.util.Map;
 public class HelloController extends Controller {
 
     public void index() {
-        redirect("index.html");
+        redirect("/static/index.html");
     }
 
     public void login() {
