@@ -5,37 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>主页</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/MyCss.css" rel="stylesheet">
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .center {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
-<nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
-<script>
-    $("#global_header").load("/static/global_header.html")
-</script>
+<nav style="font-size:20px;text-align: center; top: 0;" id="global_header">
+    <div class="navbar navbar-inverse" role="navigation" style="background-color: #F2FFFF;
+        border-color: white">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle"
+                        data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" style="display: flex; justify-content: center; align-items: center;  ">
+                    <img src="image/favicon.ico" style="width: 40px; "/>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse" style="float: right">
+                <ul class="nav navbar-nav">
+                    <li><a href="/index.html">TheCircle</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/static/signup.html">Signup</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/static/query.html">Query</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/static/model.html">Model</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
 
-<div class="container">
-    <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
-        <input type="text" class="form-control normal-font" value="test" placeholder="输入用户名" aria-describedby="_Name"
-               id="username">
-    </div>
-    <div style="text-align:center;vertical-align:middle;width:60%;margin-right:auto;margin-left:auto;">
-        <input type="text" class="form-control normal-font" value="123" placeholder="输入密码" aria-describedby="_Id" id="pwd">
-    </div>
-    <div style="text-align:center;">
-        <button type="button" class="btn btn-success normal-font" style="width: 500px;margin: 30px"
-                onclick="getLoginInput()">登录
-        </button>
-    </div>
-</div>
-<div class="container">
-    <hr/>
-    <div id="footer_text">
-        <script>
-            $("#footer_text").load("/static/footer_text.html")
-        </script>
+<div class="container ">
+    <div class="input-group normal-font center-block center normal-font" style="text-align: center">
+        <input type="text" class="form-control " style="width: 800px;height: 50px" id="index_search"
+               placeholder="Search for...">
+        <span class="input-group-btn">
+        <button class="btn btn-default" type="button" style=" width:160px;height: 50px">Go!</button>
+    </span>
     </div>
 </div>
 </body>
