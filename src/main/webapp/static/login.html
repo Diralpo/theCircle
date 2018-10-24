@@ -33,7 +33,7 @@
 
                 <a style="float: right;color: purple;margin-top: 40px" href="signup.html">没有账号？立即注册</a>
 
-                <button class="btn btn-default" type="submit" onclick="getLoginInput()"
+                <button id="login_button" class="btn btn-default" type="submit" onclick="getLoginInput()"
                         style="font-size:16px;margin-top: 40px;background-color:purple;color:white;width: 400px;height: 40px">
                     登录
                 </button>
@@ -52,16 +52,44 @@
     }
 
     function login(user, pwd) {
-        var data = {"email": user, "password":pwd};
+        var data = {"email": user, "password": pwd};
         $.ajax({
             type: 'POST',
             url: '/login',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) { //成功的话，得到消息
-                console.log(data_return)
-                alert(data_return);
-            }
+                console.log(typeof (data_return))
+                var code_return = data_return["code"];
+                console.log(typeof (code_return))
+                var email_return = data_return["email"];
+                var nickname_return = data_return["nickname"];
+                var password_return = data_return["password"];
+                var school_id_return = data_return["school_id"];
+                if (code_return == 200) {
+                    console.log("123")
+                    sessionStorage.setItem("email", email_return);
+                    sessionStorage.setItem("nickname", nickname_return);
+                    sessionStorage.setItem("password", password_return);
+                    sessionStorage.setItem("school_id", school_id_return);
+
+                    window.location.href="index.html";
+                } else if (code_return == 400) {
+                    console.log("456")
+                    var warning = $("<p></p>").text("账号或密码错误").css("color", "purple");
+                    $("#login_button").after(warning)
+                } else if (code_return == 401) {
+
+                    console.log("789")
+                    window.location.href="index.html";
+                }
+                else
+                    {
+                        alert("系统出错啦");
+                    }
+                }
+
+
 
         });
     }

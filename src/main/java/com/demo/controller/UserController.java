@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
+import com.jfinal.kit.JsonKit;
+import com.jfinal.render.JsonRender;
 
 
 import java.util.Map;
@@ -23,7 +25,7 @@ public class UserController extends Controller {
         User current_user = getSessionAttr("current_user");
         User user = User.dao.findFirst("select * from user where email="+"\""+map.get("email").toString()+"\"");
         if(current_user!=null && user!=null && current_user.equals(user)){
-            renderJson(new JsonResult(401,user.get("email").toString(),user.get("password").toString(),user.get("nickname").toString(),(int) user.get("school_id")));
+            renderJson(new JsonResult(401,current_user.get("email"),current_user.get("password"),current_user.get("nickname"),current_user.get("school_id")));
         }
         else {
             if(user==null || !user.get("password").equals(map.get("password"))){
@@ -31,12 +33,9 @@ public class UserController extends Controller {
             }
             else {
                 setSessionAttr("current_user",user);
-                renderJson("{\"code\":200}");
-                JsonResult x = new JsonResult(200,user.get("email"),user.get("password"),user.get("nickname"),user.get("school_id"));
-                System.out.println(x.toString());
-                //renderJson(new );
+                //renderJson("{\"code\":200}");
+                renderJson(new JsonResult(200,user.get("email"),user.get("password"),user.get("nickname"),user.get("school_id")));
             }
-
         }
         return;
     }

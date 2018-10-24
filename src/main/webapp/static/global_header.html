@@ -51,27 +51,28 @@
 
                 <li><a href="/static/model.html">Model</a></li>
 
-                <li><a id="unlogin" style="display:none;" href="../static/login.html">Login</a></li>
+                <li><a id="unlogin" style="display:block;" href="../static/login.html">Login</a></li>
 
-                <li><a id="login" style="display:block;" href="../static/user.html">XXX</a></li>
+                <li><a id="login" style="display:none;" href="../static/user.html">XXX</a></li>
 
                 <li></li>
             </ul>
         </div>
     </div>
-    <script>
-        //该 js 用于对网页头部用户进行渲染，使用session,用户信息统一存储在session中
-        var userName = sessionStorage.getItem('userName');
-        console.log(userName)
-        if(userName!=null){
+</div>
+
+<script>
+    $(function() {
+        var nickname = sessionStorage.getItem('nickname');
+        console.log(nickname)
+        if(nickname!=null){
             $('#unlogin').css('display','none')
-            $('#login').css('display','block')
+            $('#login').css('display','block').text("hello "+nickname)
         }
         else {
             $('#unlogin').css('display','block')
             $('#login').css('display','none')
         }
-    </script>
-</div>
-
+    })
+</script>
 
