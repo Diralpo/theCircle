@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
 
+
 import java.util.Map;
 
 public class UserController extends Controller {
@@ -19,9 +20,9 @@ public class UserController extends Controller {
         //login返回状态码 code:200->成功，400，没有该用户或账号密码错误，401该用户已登录
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
-        String current_user = getSessionAttr("current_user");
-        User user = User.dao.findFirst("select * from user where email="+map.get("email").toString());
-        if(current_user.equals(user)){
+        User current_user = getSessionAttr("current_user");
+        User user = User.dao.findFirst("select * from user where email="+"\""+map.get("email").toString()+"\"");
+        if(current_user!=null && user!=null && current_user.equals(user)){
             renderJson(new JsonResult(401,user.get("email").toString(),user.get("password").toString(),user.get("nickname").toString(),(int) user.get("school_id")));
         }
         else {
@@ -30,7 +31,10 @@ public class UserController extends Controller {
             }
             else {
                 setSessionAttr("current_user",user);
-                renderJson(new JsonResult(200,user.get("email").toString(),user.get("password").toString(),user.get("nickname").toString(),(int) user.get("school_id")));
+                renderJson("{\"code\":200}");
+                JsonResult x = new JsonResult(200,user.get("email"),user.get("password"),user.get("nickname"),user.get("school_id"));
+                System.out.println(x.toString());
+                //renderJson(new );
             }
 
         }

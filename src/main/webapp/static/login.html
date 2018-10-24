@@ -52,13 +52,14 @@
     }
 
     function login(user, pwd) {
-        var data = {"username": user, "password":};
+        var data = {"email": user, "password":pwd};
         $.ajax({
             type: 'POST',
             url: '/login',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) { //成功的话，得到消息
+                console.log(data_return)
                 alert(data_return);
             }
 
