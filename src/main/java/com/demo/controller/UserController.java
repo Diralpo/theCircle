@@ -19,7 +19,7 @@ public class UserController extends Controller {
         redirect("static/login.html");
     }
 
-    @ActionKey("/login")
+
     public void login() {
         //login返回状态码 code:200->成功，400，没有该用户或账号密码错误，401该用户已登录
         String s = HttpKit.readData(getRequest());
@@ -42,20 +42,29 @@ public class UserController extends Controller {
         return;
     }
 
-    @ActionKey("/logout")
+
     public void logout() {
         //logout返回状态码：200登出成功，400系统记录用户不一致，出错
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
         User current_user = getSessionAttr("current_user");
-        if(current_user!=null && current_user.get("email").equals(map.get("email"))){
+        if(current_user!=null && current_user.get("u_email").equals(map.get("email"))){
             getSession().removeAttribute("current_user");
-            renderJson("\"code\":200");
+            renderJson("{\"code\":200}");
         }
         else {
-            renderJson("\"code\":400");
+            renderJson("{\"code\":200}");
         }
         return;
+    }
+
+    public void signup(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s, Map.class);
+        User user  = new User().set("u_nickname",map.get("nickname")).set(
+                "u_password",map.get("password")).set(
+                "u_sex",map.get("sex"));
+
     }
 
 

@@ -55,7 +55,7 @@
         var data = {"email": user, "password": pwd};
         $.ajax({
             type: 'POST',
-            url: '/user/login',
+            url: '/login',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) { //成功的话，得到消息
@@ -65,7 +65,7 @@
                 var password_return = data_return["password"];
                 var school_id_return = data_return["school_id"];
                 if (code_return == 200) {
-                    console.log("123")
+
                     sessionStorage.setItem("email", email_return);
                     sessionStorage.setItem("nickname", nickname_return);
                     sessionStorage.setItem("password", password_return);

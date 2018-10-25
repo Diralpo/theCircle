@@ -89,10 +89,10 @@
         var data = {"email": sessionStorage.getItem("email")};
         $.ajax({
             type: 'POST',
-            url: '/user/logout',
+            url: '/logout',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
-            success: function (data_return) { //成功的话，得到消息
+            success: function (data_return) {//成功的话，得到消息
                 var code_return = data_return["code"];
                 if (code_return == 200) {
                     sessionStorage.removeItem("email");

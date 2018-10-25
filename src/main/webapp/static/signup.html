@@ -28,16 +28,22 @@
                 <input type="text" id="email"
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;"
                        placeholder="xxxxxx@example.com">
+                <p id="email_error" style="color: purple;display: none">邮箱地址错误</p>
+
                 <h4 style="color: purple;margin-top: 30px">用户名</h4>
                 <input type="text" id="userName"
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+                <p id="userName_error" style="color: purple;display: none">用户名格式错误</p>
+
                 <h4 style="color: purple;margin-top: 30px">密码</h4>
                 <input type="password" id="password"
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+                <p id="password_error" style="color: purple;display: none">密码格式错误</p>
 
                 <h4 style="color: purple;margin-top: 30px">确认密码</h4>
                 <input type="password" id="confirmPassword"
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+                <p id="confirmPassword_error" style="color: purple;display: none">两次密码不一致</p>
 
                 <h4 style="color: purple;margin-top: 30px">性别</h4>
                 <div class="input-group" style="width: 400px; text-align: center" id="sex">
@@ -82,29 +88,25 @@
         var flag = 0;
 
         if (email == null || !re_email.test(email)) {
-            var warning = $("<p></p>").text("邮箱地址错误").css("color", "purple");
-            $("#email").after(warning)
+            $("#email_error").css("display","block");
             flag = 1;
         }
         if (nickname == null || nickname.replace(" ", "").length == 0 || nickname.length > 31) {
-            var warning = $("<p></p>").text("用户名格式错误").css("color", "purple");
-            $("#userName").after(warning)
+            $("#userName_error").css("display","block");
             flag = 1;
         }
         if (pwd == null || pwd.replace(" ", "").length == 0 || pwd.length > 127) {
-            var warning = $("<p></p>").text("密码格式错误").css("color", "purple");
-            $("#pwd").after(warning)
+            $("#password_error").css("display","block");
             flag = 1;
         }
         if (pwd != confirm_pwd) {
-            var warning = $("<p></p>").text("两次密码不一致").css("color", "purple");
-            $("#confirmPassword").after(warning)
+            $("#confirmPassword_error").css("display","block");
             flag = 1;
         }
         if (flag == 1) {
             return;
         }
-        signup(email, nickname, pwd, sex, university)
+        //signup(email, nickname, pwd, sex, university)
     }
 
     function signup(email, nickname, pwd, sex, university) {
@@ -121,7 +123,14 @@
             data: JSON.stringify(data),
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) {
-                alert(data_return)
+                var code_return = data_return["code"];
+                if (code_return == 200) {
+                    window.location.href = "index.html";
+                } else if (code_return == 400) {
+                    alert("系统出错，注册失败")
+                } else {
+                    alert("系统出错");
+                }
             }
         });
     }
