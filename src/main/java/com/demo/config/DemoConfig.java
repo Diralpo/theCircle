@@ -1,5 +1,6 @@
 package com.demo.config;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
@@ -36,7 +37,7 @@ public class DemoConfig extends JFinalConfig {
     public void configPlugin(Plugins me){
         Properties property = new Properties();
         try {
-            property.load(new FileInputStream("/config.properties"));
+            property.load(new FileInputStream(new File("src/main/WEB-INF\\classes\\config.properties")));
             String db_url = property.getProperty("DB_URL");
             String db_username = property.getProperty("DB_USERNAME");
             String db_pwd = property.getProperty("DB_PASSWORD");
@@ -45,11 +46,10 @@ public class DemoConfig extends JFinalConfig {
             me.add(dp);
             ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
             me.add(arp);
-            arp.addMapping("users","id",User.class);
+            arp.addMapping("users","u_id",User.class);
         }
         catch (Exception e){
-            System.out.println("读取配置文件及登录数据库时出现错误");
-            System.exit(-1);
+            System.out.println(e.getMessage());
         }
     }
 
