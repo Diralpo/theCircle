@@ -1,16 +1,16 @@
 package com.demo.config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
-
 import com.demo.controller.UserController;
+import com.demo.model.User;
 import com.jfinal.config.*;
 import com.jfinal.core.JFinal;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
-import com.demo.model.User;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 public class DemoConfig extends JFinalConfig {
 
@@ -34,7 +34,7 @@ public class DemoConfig extends JFinalConfig {
     }
 
     @Override
-    public void configPlugin(Plugins me){
+    public void configPlugin(Plugins me) {
         Properties property = new Properties();
         try {
             property.load(new FileInputStream(new File("src/main/WEB-INF\\classes\\config.properties")));
@@ -46,9 +46,8 @@ public class DemoConfig extends JFinalConfig {
             me.add(dp);
             ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
             me.add(arp);
-            arp.addMapping("users","u_id",User.class);
-        }
-        catch (Exception e){
+            arp.addMapping("users", "u_id", User.class);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

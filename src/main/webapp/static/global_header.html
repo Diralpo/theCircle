@@ -1,6 +1,4 @@
-
-
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,7 +22,7 @@
             transform: translate(-50%, -50%);
         }
     </style>
-</head>
+</head>-->
 
 <!--注意，以上部分仅供测试使用，正常情况下无用-->
 
@@ -53,8 +51,16 @@
 
                 <li><a id="unlogin" style="display:block;" href="../static/login.html">Login</a></li>
 
-                <li><a id="login" style="display:none;" href="../static/user.html">XXX</a></li>
-
+                <li id="login" class="dropdown">
+                    <a class="btn btn-default dropdown-toggle normal-font" type="button" id="userMenu"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="border: none">
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu normal-font" aria-labelledby="userMenu">
+                        <li><a href="#">个人主页</a></li>
+                        <li><a class="btn" onclick="logout()">登出</a></li>
+                    </ul>
+                </li>
                 <li></li>
             </ul>
         </div>
@@ -62,17 +68,46 @@
 </div>
 
 <script>
-    $(function() {
+    $(function () {
         var nickname = sessionStorage.getItem('nickname');
         console.log(nickname)
-        if(nickname!=null){
-            $('#unlogin').css('display','none')
-            $('#login').css('display','block').text("hello "+nickname)
+        if (nickname != null) {
+            $('#unlogin').css('display', 'none')
+            $('#login').css('display', 'block')
+            $('#userMenu').text("hello " + nickname)
         }
         else {
-            $('#unlogin').css('display','block')
-            $('#login').css('display','none')
+            $('#unlogin').css('display', 'block')
+            $('#login').css('display', 'none')
         }
     })
+</script>
+
+<script>
+    function logout() {
+        console.log("maskdmskdk")
+        var data = {"email": sessionStorage.getItem("email")};
+        $.ajax({
+            type: 'POST',
+            url: '/user/logout',
+            data: JSON.stringify(data),  //转化字符串
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) { //成功的话，得到消息
+                var code_return = data_return["code"];
+                if (code_return == 200) {
+                    sessionStorage.removeItem("email");
+                    sessionStorage.removeItem("nickname");
+                    sessionStorage.removeItem("password");
+                    sessionStorage.removeItem("school_id");
+                    window.location.href = "index.html";
+                } else if (code_return == 400) {
+                    alert("系统出错，前后端记录用户不一致")
+                } else {
+                    alert("系统出错啦");
+                }
+            }
+        });
+
+    }
 </script>
 

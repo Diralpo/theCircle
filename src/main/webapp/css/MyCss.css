@@ -41,3 +41,8 @@
     font-size: 14px;
     color: #BA55D3;
 }
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+    color: #fff;
+    background-color: purple;
+}

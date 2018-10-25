@@ -23,7 +23,7 @@
         <div class="col-md-4" style="text-align: center"></div>
         <div class="col-md-4 normal-font">
             <div id="input-group">
-                <p style="color: purple;font-size: 40px;margin-top: 50px">注册新用户</p>
+                <p style="color: purple;font-size: 40px">注册新用户</p>
                 <h4 style="color: purple;margin-top: 30px">邮箱</h4>
                 <input type="text" id="email"
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;"
@@ -39,6 +39,24 @@
                 <input type="password" id="confirmPassword"
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
 
+                <h4 style="color: purple;margin-top: 30px">性别</h4>
+                <div class="input-group" style="width: 400px; text-align: center" id="sex">
+                    <label class="radio-inline" style="zoom: 100%">
+                        <input class="normal-font" type="radio" id="radio-1" name="sexOptions" value="option1">男
+                    </label>
+                    <label class="radio-inline" style="zoom: 100%">
+                        <input class="normal-font" type="radio" id="radio-2" name="sexOptions" value="option2">女
+                    </label>
+                </div>
+
+                <h4 style="color: purple;margin-top: 30px">学校</h4>
+                <select id="university" style="width: 250px;height: 40px;border: none">
+                    <option value="1">北京航空航天大学</option>
+                    <option value="2">不上学</option>
+                    <option value="3">退学</option>
+                    <option value="4">休学</option>
+                </select>
+
                 <button class="btn btn-default" type="submit" onclick="getSignupInput()"
                         style="font-size:16px;margin-top: 40px;background-color:purple;color:white;width: 400px;height: 40px">
                     确认注册
@@ -53,28 +71,59 @@
 </body>
 <script>
     //一个简单的检验例子，待完善，优先度低
-    function getSignupInput( ){
+    function getSignupInput() {
         var email = $("#email").val();
-        console.log(email)
-        if(email==''||email==null){
-            var warning=$("<p></p>").text("邮箱地址错误").css("color","purple");
+        var nickname = $("#userName").val();
+        var pwd = $("#password").val();
+        var confirm_pwd = $("#confirmPassword").val();
+        var sex = $("#sex").val();
+        var university = $("#university").val();
+        var re_email = /^([a-zA-Z0-9]+[-_\.]?)+@[a-zA-Z0-9]+\.[a-z]+$/;
+        var flag = 0;
+
+        if (email == null || !re_email.test(email)) {
+            var warning = $("<p></p>").text("邮箱地址错误").css("color", "purple");
             $("#email").after(warning)
+            flag = 1;
         }
-
-        var re = /^([a-zA-Z0-9]+[-_\.]?)+@[a-zA-Z0-9]+\.[a-z]+$/;
-
+        if (nickname == null || nickname.replace(" ", "").length == 0 || nickname.length > 31) {
+            var warning = $("<p></p>").text("用户名格式错误").css("color", "purple");
+            $("#userName").after(warning)
+            flag = 1;
+        }
+        if (pwd == null || pwd.replace(" ", "").length == 0 || pwd.length > 127) {
+            var warning = $("<p></p>").text("密码格式错误").css("color", "purple");
+            $("#pwd").after(warning)
+            flag = 1;
+        }
+        if (pwd != confirm_pwd) {
+            var warning = $("<p></p>").text("两次密码不一致").css("color", "purple");
+            $("#confirmPassword").after(warning)
+            flag = 1;
+        }
+        if (flag == 1) {
+            return;
+        }
+        signup(email, nickname, pwd, sex, university)
     }
-    function test(data) {
-        var data={"username": data[0], "pwd": hash = hex_md5(data[1]), 'school': data[2], 'email': data[3]};
-                $.ajax({
-                    type: 'POST',
-                    url:'http://127.0.0.1:8080/signup',
-                    data:JSON.stringify(data),
-                    contentType: 'application/json; charset=UTF-8',
-                    success:function(data_return){
-                        alert(data_return)
-                    }
-                });
+
+    function signup(email, nickname, pwd, sex, university) {
+        var data = {
+            "email": email,
+            "nickname": nickname,
+            'password': pwd,
+            'sex': sex,
+            'university':university
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/signup',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                alert(data_return)
+            }
+        });
     }
 </script>
 </html>

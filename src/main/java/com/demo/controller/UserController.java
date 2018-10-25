@@ -4,6 +4,7 @@ package com.demo.controller;
 import com.demo.model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.JsonKit;
@@ -18,6 +19,7 @@ public class UserController extends Controller {
         redirect("static/login.html");
     }
 
+    @ActionKey("/login")
     public void login() {
         //login返回状态码 code:200->成功，400，没有该用户或账号密码错误，401该用户已登录
         String s = HttpKit.readData(getRequest());
@@ -40,10 +42,21 @@ public class UserController extends Controller {
         return;
     }
 
+    @ActionKey("/logout")
     public void logout() {
-        String username = getSessionAttr("username");
-        System.out.println(username);
-        getSession().removeAttribute("username");
-        renderJson("{\"mes\":\"退出成功\"}");
+        //logout返回状态码：200登出成功，400系统记录用户不一致，出错
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s, Map.class);
+        User current_user = getSessionAttr("current_user");
+        if(current_user!=null && current_user.get("email").equals(map.get("email"))){
+            getSession().removeAttribute("current_user");
+            renderJson("\"code\":200");
+        }
+        else {
+            renderJson("\"code\":400");
+        }
+        return;
     }
+
+
 }

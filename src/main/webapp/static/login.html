@@ -55,13 +55,11 @@
         var data = {"email": user, "password": pwd};
         $.ajax({
             type: 'POST',
-            url: '/login',
+            url: '/user/login',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) { //成功的话，得到消息
-                console.log(typeof (data_return))
                 var code_return = data_return["code"];
-                console.log(typeof (code_return))
                 var email_return = data_return["email"];
                 var nickname_return = data_return["nickname"];
                 var password_return = data_return["password"];
@@ -73,24 +71,18 @@
                     sessionStorage.setItem("password", password_return);
                     sessionStorage.setItem("school_id", school_id_return);
 
-                    window.location.href="index.html";
+                    window.location.href = "index.html";
                 } else if (code_return == 400) {
-                    console.log("456")
                     var warning = $("<p></p>").text("账号或密码错误").css("color", "purple");
                     $("#login_button").after(warning)
                 } else if (code_return == 401) {
 
-                    console.log("789")
-                    window.location.href="index.html";
+                    window.location.href = "index.html";
                 }
-                else
-                    {
-                        alert("系统出错啦");
-                    }
+                else {
+                    alert("系统出错啦");
                 }
-
-
-
+            }
         });
     }
 </script>
