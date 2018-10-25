@@ -1,5 +1,8 @@
 package com.demo.config;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import com.demo.controller.UserController;
 import com.jfinal.config.*;
 import com.jfinal.core.JFinal;
@@ -9,8 +12,6 @@ import com.jfinal.template.Engine;
 import com.demo.model.User;
 
 public class DemoConfig extends JFinalConfig {
-
-
 
     public static void main(String args[]) {
         JFinal.start("src/main/webapp", 80, "/");
@@ -32,13 +33,24 @@ public class DemoConfig extends JFinalConfig {
     }
 
     @Override
-    public void configPlugin(Plugins me) {
-        DruidPlugin dp = new DruidPlugin("jdbc:mysql://localhost:3306/circle?useSSL=false",
-                "root","123456");
-        me.add(dp);
-        ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
-        me.add(arp);
-        arp.addMapping("user","id",User.class);
+    public void configPlugin(Plugins me){
+        Properties property = new Properties();
+        try {
+            property.load(new FileInputStream("/config.properties"));
+            String db_url = property.getProperty("DB_URL");
+            String db_username = property.getProperty("DB_USERNAME");
+            String db_pwd = property.getProperty("DB_PASSWORD");
+
+            DruidPlugin dp = new DruidPlugin(db_url, db_username, db_pwd);
+            me.add(dp);
+            ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
+            me.add(arp);
+            arp.addMapping("users","id",User.class);
+        }
+        catch (Exception e){
+            System.out.println("读取配置文件及登录数据库时出现错误");
+            System.exit(-1);
+        }
     }
 
     @Override
@@ -50,5 +62,6 @@ public class DemoConfig extends JFinalConfig {
     public void configHandler(Handlers me) {
 
     }
+
 
 }
