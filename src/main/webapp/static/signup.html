@@ -82,7 +82,9 @@
         var nickname = $("#userName").val();
         var pwd = $("#password").val();
         var confirm_pwd = $("#confirmPassword").val();
-        var sex = $("#sex").val();
+        var sex1 = $('#radio-1').prop('checked');
+        var sex2 = $('#radio-2').prop('checked');
+        var sex = sex1==true?"male":"female";
         var university = $("#university").val();
         var re_email = /^([a-zA-Z0-9]+[-_\.]?)+@[a-zA-Z0-9]+\.[a-z]+$/;
         var flag = 0;
@@ -106,7 +108,7 @@
         if (flag == 1) {
             return;
         }
-        //signup(email, nickname, pwd, sex, university)
+        signup(email, nickname, pwd, sex, university)
     }
 
     function signup(email, nickname, pwd, sex, university) {
@@ -115,16 +117,25 @@
             "nickname": nickname,
             'password': pwd,
             'sex': sex,
-            'university':university
+            'university':null
+            //还没确定学校编号先不管
         };
         $.ajax({
             type: 'POST',
-            url: '/signup',
+            url: '/signUp',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) {
                 var code_return = data_return["code"];
                 if (code_return == 200) {
+                    var email_return = data_return["email"];
+                    var nickname_return = data_return["nickname"];
+                    var password_return = data_return["password"];
+                    var school_id_return = data_return["school_id"];
+                    sessionStorage.setItem("email", email_return);
+                    sessionStorage.setItem("nickname", nickname_return);
+                    sessionStorage.setItem("password", password_return);
+                    sessionStorage.setItem("school_id", school_id_return);
                     window.location.href = "index.html";
                 } else if (code_return == 400) {
                     alert("系统出错，注册失败")

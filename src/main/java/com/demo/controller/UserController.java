@@ -8,6 +8,8 @@ import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.JsonKit;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.render.JsonRender;
 
 
@@ -20,7 +22,7 @@ public class UserController extends Controller {
     }
 
 
-    public void login() {
+    public void logIn() {
         //login返回状态码 code:200->成功，400，没有该用户或账号密码错误，401该用户已登录
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
@@ -43,7 +45,7 @@ public class UserController extends Controller {
     }
 
 
-    public void logout() {
+    public void logOut() {
         //logout返回状态码：200登出成功，400系统记录用户不一致，出错
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
@@ -53,17 +55,28 @@ public class UserController extends Controller {
             renderJson("{\"code\":200}");
         }
         else {
-            renderJson("{\"code\":200}");
+            renderJson("{\"code\":400}");
         }
         return;
     }
 
-    public void signup(){
+    public void signUp(){
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
-        User user  = new User().set("u_nickname",map.get("nickname")).set(
+        Record new_user  = new Record().set("u_nickname",map.get("nickname")).set(
                 "u_password",map.get("password")).set(
-                "u_sex",map.get("sex"));
+                "u_sex",map.get("sex")).set("u_permission",1).set("u_status",1)
+                .set("u_email",map.get("email"));
+        boolean success = Db.save("users","u_id",new_user);
+        if(success==true){
+            User user = User.dao.findFirst("select * from users where u_email="+"\""+map.get("email").toString()+"\"");
+            setSessionAttr("current_user",user);
+            renderJson(new JsonResult(200,user.get("u_email"),user.get("u_password"),user.get("u_nickname"),user.get("u_uni_id")));
+        }
+        else {
+            renderJson("{\"code\":400}");
+        }
+        return;
 
     }
 

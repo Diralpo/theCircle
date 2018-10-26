@@ -55,7 +55,7 @@
         var data = {"email": user, "password": pwd};
         $.ajax({
             type: 'POST',
-            url: '/login',
+            url: '/logIn',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) { //成功的话，得到消息

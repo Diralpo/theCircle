@@ -89,7 +89,7 @@
         var data = {"email": sessionStorage.getItem("email")};
         $.ajax({
             type: 'POST',
-            url: '/logout',
+            url: '/logOut',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) {//成功的话，得到消息
