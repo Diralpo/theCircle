@@ -55,6 +55,7 @@
 
 #show_object div.row {
     height: 60px;
+    width: 184px;
 }
 
 #show_object .object-name {

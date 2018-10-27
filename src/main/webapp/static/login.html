@@ -37,7 +37,7 @@
                         style="font-size:16px;margin-top: 40px;background-color:purple;color:white;width: 400px;height: 40px">
                     登录
                 </button>
-
+                <div id="login-prompt"></div>
             </div>
         </div>
         <div class="col-md-4" style="text-align: center"></div>
@@ -46,6 +46,7 @@
 </body>
 <script>
     function getLoginInput() {
+        $("#login-prompt").html("");
         var user = $("#email").val();
         var pwd = $("#password").val();
         login(user, pwd)
@@ -74,7 +75,7 @@
                     window.location.href = "index.html";
                 } else if (code_return == 400) {
                     var warning = $("<p></p>").text("账号或密码错误").css("color", "purple");
-                    $("#login_button").after(warning)
+                    $("#login-prompt").html(warning)
                 } else if (code_return == 401) {
 
                     window.location.href = "index.html";
