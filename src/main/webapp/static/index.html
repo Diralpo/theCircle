@@ -65,20 +65,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7" id="show_object">
+        <div class="col-md-7" id="show-object">
         </div>
-        <div class="col-md-3" style="background-color: rgba( 152, 251, 158, 0.2 ); height: auto">
+        <div class="col-md-3" id="object-details">
 
         </div>
     </div>
-
 
 </div>
 </body>
 <script>
     function myFocus() {
-        $("#show_object>div").mouseover(
-            alert($(this).find("a>div.col-md-8>p").text())
+        $("#show-object>div").mouseover(
+            $(this).css('background-color', 'rgba(140, 20, 152, 0.1)')
+        ).mouseout(
+            $(this).css('background-color', 'rgba(140, 251, 152, 0.1)')
         );
     }
 
@@ -91,23 +92,45 @@
                 success: function (data_return) { //成功的话，得到消息
                     var data = eval(data_return);
                     var len = data.length;
-                    if(len>0) {
+                    if (len > 0) {
                         for (var i = 0; i < len; i++) {
-                            var newP = $('<br/><div class="row"">' +
-                                '<a href="'
-                                + data[i]['obj_href']+
-                                '"><div class="col-md-4"><img height="60px" alt="'
-                                +data[i]['obj_name']
-                                +'"' +
-                                'src="'
-                                +data[i]['obj_img_href']+
-                                '"></div><div class="col-md-8">' +
-                                '<p>'+data[i]['obj_name']+'</p>' +
-                                '<div><div><span>' +
-                                '独立, 平台, 好评原声音乐' +
-                                '</span></div> </div> </div> </a> </div>')
-                            $("#show_object").append(newP)
+                            var newP = $(
+                                '            <div class="row">\n' +
+                                '<p style="display: none" class="object-id">' + data[i]['obj_id'] + '</p>' +
+                                '                <a href="' + data[i]['obj_href'] + '">\n' +
+                                '                    <div class="col-md-4">\n' +
+                                '                        <img alt="' + data[i]['obj_name'] + '" class="object-img"\n' +
+                                '                             src="' + data[i]['obj_img_href'] + '">\n' +
+                                '                    </div>\n' +
+                                '                    <div class="col-md-8">\n' +
+                                '                        <p class="object-name">' + data[i]['obj_name'] + '</p>\n' +
+                                '                        <div class="object-tags">\n' +
+                                '                            <span>建筑建造, 生存, 策略, 沙盒</span>\n' +
+                                '                        </div>\n' +
+                                '                    </div>\n' +
+                                '                </a>\n' +
+                                '            </div><br/>');
+                            $("#show-object").append(newP)
                         }
+                        $("#show-object>div.row").mouseover(function () {
+                            $(this).css('background-color', 'rgba(140, 0, 152, 0.1)');
+                            var object_id = $(this).find('p.object-id').text();
+                            var obj_name = $(this).find('p.object-name').text();
+                            var obj_data = {"obj_id": object_id,'obj_name': obj_name};
+                            $.ajax({
+                                type: 'POST',
+                                url: '/object/query',
+                                data: JSON.stringify( obj_data ),
+                                contentType: 'application/json; charset=UTF-8',
+                                success: function (data_return) { //成功的话，得到消息
+                                    var detail = eval(data_return);
+                                    $("#object-details").html(detail["detail"]).css("background-color",
+                                        "rgba(140, 0, 152, 0.1)").height("250px");
+                                }
+                            }) }
+                        ).mouseout(function () {
+                            $(this).css('background-color', '')
+                        });
                     }
                 }
             }
