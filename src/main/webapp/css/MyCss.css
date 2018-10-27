@@ -49,16 +49,16 @@
 
 
 
-#show_object {
-    background-color: rgba(140, 251, 152, 0.1);
+#show-object {
 }
 
-#show_object div.row {
+#show-object div.row {
     height: 60px;
-    width: 184px;
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
-#show_object .object-name {
+#show-object .object-name {
     color: #10161b;
     font-size: 1.25em;
     line-height: 18px;
@@ -67,8 +67,9 @@
     display: block;
 }
 
-#show_object .object-img {
+#show-object .object-img {
     height: 60px;
+    width: 184px;
     left: 0;
 }
 

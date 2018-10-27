@@ -11,6 +11,7 @@
     <script src="../js/jquery-3.3.1.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/loadWeb.js"></script>
 </head>
 <body>
 <nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
@@ -75,14 +76,6 @@
 </div>
 </body>
 <script>
-    function myFocus() {
-        $("#show-object>div").mouseover(
-            $(this).css('background-color', 'rgba(140, 20, 152, 0.1)')
-        ).mouseout(
-            $(this).css('background-color', 'rgba(140, 251, 152, 0.1)')
-        );
-    }
-
     $(document).ready(function () {
         // 文档加载完毕，从数据库中读取需要的信息
         $.ajax({
@@ -109,11 +102,11 @@
                                 '                        </div>\n' +
                                 '                    </div>\n' +
                                 '                </a>\n' +
-                                '            </div><br/>');
+                                '            </div>');
                             $("#show-object").append(newP)
                         }
                         $("#show-object>div.row").mouseover(function () {
-                            $(this).css('background-color', 'rgba(140, 0, 152, 0.1)');
+                            $(this).css('background-color', 'rgba(140, 150, 152, 0.1)');
                             var object_id = $(this).find('p.object-id').text();
                             var obj_name = $(this).find('p.object-name').text();
                             var obj_data = {"obj_id": object_id,'obj_name': obj_name};
@@ -125,7 +118,7 @@
                                 success: function (data_return) { //成功的话，得到消息
                                     var detail = eval(data_return);
                                     $("#object-details").html(detail["detail"]).css("background-color",
-                                        "rgba(140, 0, 152, 0.1)").height("250px");
+                                        "rgba(140, 150, 152, 0.1)").height("{0}px".format(len*66+6));
                                 }
                             }) }
                         ).mouseout(function () {
