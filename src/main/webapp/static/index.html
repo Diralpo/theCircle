@@ -119,7 +119,7 @@
                             $("#show-object").append(newP);
                         }
                         $("#show-object>div.row").mouseenter(function () {
-                                $(this).css('background-color', 'rgba(140, 150, 152, 0.1)');
+                                $(this).css('backgroundColor', 'rgba(140, 150, 152, 0.1)');
                                 var object_id = $(this).find('p.object-id').text();
                                 var obj_name = $(this).find('p.object-name').text();
                                 var obj_data = {"obj_id": object_id, 'obj_name': obj_name};
@@ -130,14 +130,14 @@
                                     contentType: 'application/json; charset=UTF-8',
                                     success: function (data_return) { //成功的话，得到消息
                                         var detail = eval(data_return);
-                                        $("#object-details").html(detail["detail"]).css("background-color",
+                                        $("#object-details").html(detail["detail"]).css("backgroundColor",
                                             "rgba(140, 150, 152, 0.1)").height("{0}px".format(len * 66 + 6));
                                     }
                                 });
                             }
                         ).mouseleave(function () {
-                            $(this).css('background-color', '');
-                            $("#object-details").html("").css("background-color", "").height("");
+                            $(this).css('backgroundColor', '');
+                            $("#object-details").html("").css("backgroundColor", "").height("");
                         });
                     }
                 }
