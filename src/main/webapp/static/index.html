@@ -66,41 +66,6 @@
             </div>
         </div>
         <div class="col-md-7" id="show_object">
-            <div class="row">
-                <a href="https://store.steampowered.com/app/294100/RimWorld/">
-                    <div class="col-md-4">
-                        <img alt="RimWorld" class="object-img"
-                             src="https://cdn.steamstatic.com.8686c.com/steam/apps/294100/capsule_184x69.jpg?t=1539838662">
-                    </div>
-                    <div class="col-md-8">
-                        <p class="object-name">RimWorld</p>
-                        <div class="object-tags">
-                            <span>建筑建造, 生存, 策略, 沙盒</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <br/>
-
-            <div class="row" style="height: 60px; background-color: rgba( 152, 251, 152, 0.2 );">
-                <a href="https://store.steampowered.com/app/933450/Wenjia/">
-                    <div class="col-md-4">
-                        <img alt="Wenjia"
-                             src="https://cdn.steamstatic.com.8686c.com/steam/apps/933450/capsule_184x69.jpg?t=1539874155"
-                             height="60px">
-                    </div>
-                    <div class="col-md-8">
-                        <p style="color: #10161b; font-size: 1.25em; line-height: 18px; text-overflow: ellipsis; white-space: nowrap; display: block;">
-                            Wenjia</p>
-
-                        <div>
-                            <div><span>独立</span><span>, 平台</span><span>, 好评原声音乐</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
         </div>
         <div class="col-md-3" style="background-color: rgba( 152, 251, 158, 0.2 ); height: auto">
 
@@ -111,8 +76,42 @@
 </div>
 </body>
 <script>
+    function myFocus() {
+        $("#show_object>div").mouseover(
+            alert($(this).find("a>div.col-md-8>p").text())
+        );
+    }
+
     $(document).ready(function () {
         // 文档加载完毕，从数据库中读取需要的信息
+        $.ajax({
+                type: 'GET',
+                url: '/object/seekObject',
+                contentType: 'application/json; charset=UTF-8',
+                success: function (data_return) { //成功的话，得到消息
+                    var data = eval(data_return);
+                    var len = data.length;
+                    if(len>0) {
+                        for (var i = 0; i < len; i++) {
+                            var newP = $('<br/><div class="row"">' +
+                                '<a href="'
+                                + data[i]['obj_href']+
+                                '"><div class="col-md-4"><img height="60px" alt="'
+                                +data[i]['obj_name']
+                                +'"' +
+                                'src="'
+                                +data[i]['obj_img_href']+
+                                '"></div><div class="col-md-8">' +
+                                '<p>'+data[i]['obj_name']+'</p>' +
+                                '<div><div><span>' +
+                                '独立, 平台, 好评原声音乐' +
+                                '</span></div> </div> </div> </a> </div>')
+                            $("#show_object").append(newP)
+                        }
+                    }
+                }
+            }
+        );
     });
 </script>
 </html>

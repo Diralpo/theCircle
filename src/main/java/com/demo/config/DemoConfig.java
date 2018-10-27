@@ -1,6 +1,8 @@
 package com.demo.config;
 
+import com.demo.controller.ObjectsController;
 import com.demo.controller.UserController;
+import com.demo.model.TheObject;
 import com.demo.model.User;
 import com.jfinal.config.*;
 import com.jfinal.core.JFinal;
@@ -26,6 +28,7 @@ public class DemoConfig extends JFinalConfig {
     @Override
     public void configRoute(Routes me) {
         me.add("/", UserController.class);
+        me.add("/object", ObjectsController.class);
     }
 
     @Override
@@ -47,6 +50,7 @@ public class DemoConfig extends JFinalConfig {
             ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
             me.add(arp);
             arp.addMapping("users", "u_id", User.class);
+            arp.addMapping("object", "obj_id", TheObject.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
