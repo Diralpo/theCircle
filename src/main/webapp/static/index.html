@@ -105,7 +105,7 @@
                                 '            </div>');
                             $("#show-object").append(newP)
                         }
-                        $("#show-object>div.row").mouseover(function () {
+                        $("#show-object>div.row").mouseenter(function () {
                             $(this).css('background-color', 'rgba(140, 150, 152, 0.1)');
                             var object_id = $(this).find('p.object-id').text();
                             var obj_name = $(this).find('p.object-name').text();
@@ -121,8 +121,9 @@
                                         "rgba(140, 150, 152, 0.1)").height("{0}px".format(len*66+6));
                                 }
                             }) }
-                        ).mouseout(function () {
+                        ).mouseleave(function () {
                             $(this).css('background-color', '')
+                            $("#object-details").html("").css("background-color", "").height("");
                         });
                     }
                 }
