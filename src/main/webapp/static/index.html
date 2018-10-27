@@ -7,6 +7,7 @@
     <title>主页</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/MyCss.css" rel="stylesheet">
+
     <script src="../js/jquery-3.3.1.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="../js/bootstrap.min.js"></script>
@@ -17,36 +18,101 @@
     $("#global_header").load("../static/global_header.html")
 </script>
 
-<div class="container ">
-    <div class="input-group normal-font center-block center normal-font" style="text-align: center">
-        <input type="text" class="form-control " style="width: 800px;height: 50px" id="index_search"
-               placeholder="Search for...">
-        <span class="input-group-btn">
-        <button class="btn btn-default" type="button" style=" width:160px;height: 50px">Go!</button>
-    </span>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <input type="text" maxlength="40" class="form-control normal-font" placeholder="search for..."
+                   aria-describedby="_Search"
+                   id="search_str" style="height: 38px">
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-success normal-font"
+                    style="background-color: #FFF0F0; border: 0; color: black; height: 38px;">search
+            </button>
+        </div>
     </div>
+    <!-- 显示需要展示的信息 -->
+    <br/>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div>
+                <div>
+                    <div>
+                        按类型浏览
+                    </div>
+                    <a href="/">
+                        游戏
+                    </a>
+                    <br/>
+                    <a href="/">
+                        影音
+                    </a>
+                    <br/>
+                    <a href="/">
+                        体育
+                    </a>
+                </div>
+                <div>
+                    <div>
+                        最近查看
+                    </div>
+                    <div>
+                        <a href="/">
+                            RimWorld
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7" id="show_object">
+            <div class="row">
+                <a href="https://store.steampowered.com/app/294100/RimWorld/">
+                    <div class="col-md-4">
+                        <img alt="RimWorld" class="object-img"
+                             src="https://cdn.steamstatic.com.8686c.com/steam/apps/294100/capsule_184x69.jpg?t=1539838662">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="object-name">RimWorld</p>
+                        <div class="object-tags">
+                            <span>建筑建造, 生存, 策略, 沙盒</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <br/>
+
+            <div class="row" style="height: 60px; background-color: rgba( 152, 251, 152, 0.2 );">
+                <a href="https://store.steampowered.com/app/933450/Wenjia/">
+                    <div class="col-md-4">
+                        <img alt="Wenjia"
+                             src="https://cdn.steamstatic.com.8686c.com/steam/apps/933450/capsule_184x69.jpg?t=1539874155"
+                             height="60px">
+                    </div>
+                    <div class="col-md-8">
+                        <p style="color: #10161b; font-size: 1.25em; line-height: 18px; text-overflow: ellipsis; white-space: nowrap; display: block;">
+                            Wenjia</p>
+
+                        <div>
+                            <div><span>独立</span><span>, 平台</span><span>, 好评原声音乐</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3" style="background-color: rgba( 152, 251, 158, 0.2 ); height: auto">
+
+        </div>
+    </div>
+
+
 </div>
 </body>
 <script>
-    function getLoginInput() {
-        var user = document.getElementById("username").value;
-        var pwd = document.getElementById("pwd").value;
-        test(user, pwd)
-    }
-
-    function test(user, pwd) {
-        var data = {"email": user, "password": pwd};
-        $.ajax({
-            type: 'POST',
-            url: '/login',
-            data: JSON.stringify(data),  //转化字符串
-            contentType: 'application/json; charset=UTF-8',
-            success: function (data_return) { //成功的话，得到消息
-                alert(data_return);
-                window.location.href = "test_login.html"
-            }
-
-        });
-    }
+    $(document).ready(function () {
+        // 文档加载完毕，从数据库中读取需要的信息
+    });
 </script>
 </html>

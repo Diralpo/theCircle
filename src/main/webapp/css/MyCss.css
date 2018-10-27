@@ -46,3 +46,32 @@
     color: #fff;
     background-color: purple;
 }
+
+
+
+#show_object {
+    background-color: rgba(140, 251, 152, 0.1);
+}
+
+#show_object div.row {
+    height: 60px;
+    background-color: rgba(152, 251, 152, 0.2);
+}
+
+#show_object .object-name {
+    color: #10161b;
+    font-size: 1.25em;
+    line-height: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+#show_object .object-img {
+    height: 60px;
+    left: 0;
+}
+
+#show_object .object-tags {
+    font-size: 14px;
+}
