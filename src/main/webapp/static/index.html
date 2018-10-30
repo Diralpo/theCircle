@@ -9,17 +9,16 @@
     <link href="../css/MyCss.css" rel="stylesheet">
 
     <script src="../js/jquery-3.3.1.js"></script>
-    <script src="../js/jquery.cookie.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/loadWeb.js"></script>
 </head>
 <body>
 <nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
 <script>
-    $("#global_header").load("../static/global_header.html");
+    $("#global_header").load("../static/global_header.html")
 </script>
 
-<div class="container">
+<div class="container" style="width: 90%;">
     <div class="row">
         <div class="col-md-9">
             <input type="text" maxlength="40" class="form-control normal-font" placeholder="search for..."
@@ -34,56 +33,51 @@
     </div>
     <!-- 显示需要展示的信息 -->
     <br/>
-
     <div class="row">
         <div class="col-md-2">
             <div>
                 <div>
-                    <div>
-                        按类型浏览
-                    </div>
-                    <a href="/">
-                        游戏
-                    </a>
-                    <br/>
-                    <a href="/">
-                        影音
-                    </a>
-                    <br/>
-                    <a href="/">
-                        体育
-                    </a>
+                    按类型浏览
                 </div>
-                <div>
-                    <div>
-                        最近查看
-                    </div>
-                    <div>
-                        <a href="/">
-                            RimWorld
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7" id="show-object">
-            <div class="row" style="display: none">
-                <p style="display: none" class="object-id"></p>
-                <a href="">
-                    <div class="col-md-4">
-                        <img class="object-img" src="">
-                    </div>
-                    <div class="col-md-8">
-                        <p class="object-name"></p>
-                        <div class="object-tags">
-                            <span></span>
-                        </div>
-                    </div>
+                <a href="/">
+                    游戏
+                </a>
+                <br/>
+                <a href="/">
+                    影音
+                </a>
+                <br/>
+                <a href="/">
+                    体育
                 </a>
             </div>
+            <div>
+                <div>
+                    最近查看
+                </div>
+                <div>
+                    <a href="/">
+                        RimWorld
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3" id="object-details">
+        <div class="col-md-8" id="show_object">
+            <!-- 不显示，仅调试css使用
+            <article class="col-lg-3">
+                <a href="https://store.steampowered.com/app/294100/RimWorld/">
+                    <p class="object_id">1</p>
+                    <div>
+                        <img alt="RimWorld" class="img-responsive" src="../../image/object_img/RimWorld.jpg">
+                    </div>
+                    <div>
+                        <p class="object_name">RimWorld</p>
+                    </div>
+                </a>
+            </article>
+            -->
         </div>
+        <div class="col-md-2"></div>
     </div>
 
 </div>
@@ -92,57 +86,17 @@
     $(document).ready(function () {
         // 文档加载完毕，从数据库中读取需要的信息
         $.ajax({
-                type: 'GET',
-                url: '/object/seekObject',
-                contentType: 'application/json; charset=UTF-8',
-                success: function (data_return) { //成功的话，得到消息
-                    var data = eval(data_return);
-                    var len = data.length;
-                    if (len > 0) {
-                        for (var i = 0; i < len; i++) {
-                            var newP = $(
-                                '            <div class="row">\n' +
-                                '<p style="display: none" class="object-id">' + data[i]['obj_id'] + '</p>' +
-                                '                <a href="' + data[i]['obj_href'] + '">\n' +
-                                '                    <div class="col-md-4">\n' +
-                                '                        <img alt="' + data[i]['obj_name'] + '" class="object-img"\n' +
-                                '                             src="' + data[i]['obj_img_href'] + '">\n' +
-                                '                    </div>\n' +
-                                '                    <div class="col-md-8">\n' +
-                                '                        <p class="object-name">' + data[i]['obj_name'] + '</p>\n' +
-                                '                        <div class="object-tags">\n' +
-                                '                            <span>建筑建造, 生存, 策略, 沙盒</span>\n' +
-                                '                        </div>\n' +
-                                '                    </div>\n' +
-                                '                </a>\n' +
-                                '            </div>');
-                            $("#show-object").append(newP);
-                        }
-                        $("#show-object>div.row").mouseenter(function () {
-                                $(this).css('backgroundColor', 'rgba(140, 150, 152, 0.1)');
-                                var object_id = $(this).find('p.object-id').text();
-                                var obj_name = $(this).find('p.object-name').text();
-                                var obj_data = {"obj_id": object_id, 'obj_name': obj_name};
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/object/query',
-                                    data: JSON.stringify(obj_data),
-                                    contentType: 'application/json; charset=UTF-8',
-                                    success: function (data_return) { //成功的话，得到消息
-                                        var detail = eval(data_return);
-                                        $("#object-details").html(detail["detail"]).css("backgroundColor",
-                                            "rgba(140, 150, 152, 0.1)").height("{0}px".format(len * 66 + 6));
-                                    }
-                                });
-                            }
-                        ).mouseleave(function () {
-                            $(this).css('backgroundColor', '');
-                            $("#object-details").html("").css("backgroundColor", "").height("");
-                        });
-                    }
+            type: 'GET',
+            url: '/object/seekObject',
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) { //成功的话，得到消息
+                var data = eval(data_return);
+                var len = data.length;
+                if (len > 0) {
+                    loadObject(data, len);
                 }
             }
-        );
+        });
     });
 </script>
 </html>
