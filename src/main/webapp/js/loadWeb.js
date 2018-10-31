@@ -32,16 +32,39 @@ function loadObject(data, len) {
                 data[i]['obj_name'] +
                 "\" class=\"img-responsive\" src=\"" +
                 data[i]['obj_img_href']+
-                "\"></div><div><p class=\"object_name\">" +
+                "\"></div><div class='row'><div class=\"col-md-8\"><p class=\"object_name\">" +
                 data[i]['obj_name'] +
-                "</p></div></a></article>");
+                "</p></div><div class=\"col-md-4\"><p class=\"object_type\">" +
+                data[i]['obj_type'] +
+                "</p></div></div></a></article>");
             $("#show_object").append(newP);
         }
         $("#show_object>article.col-lg-3").mouseenter(function () {
-                $(this).css('backgroundColor', 'rgba(140, 150, 152, 0.1)');
+                $(this).css('backgroundColor', 'rgba(140, 150, 152, 0.3)');
             }
         ).mouseleave(function () {
             $(this).css('backgroundColor', '');
         });
     }
+}
+
+function searchObject(theStr) {
+    var data = {"keyword": theStr, "email": sessionStorage.getItem("email")};
+    $.ajax({
+        type: 'POST',
+        url: '/object/search',
+        data: JSON.stringify(data),  //转化字符串
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data_return) { //成功的话，得到消息
+            $("#show_object").html("");
+            var data = eval(data_return);
+            var len = data.length;
+            if (len > 0) {
+                loadObject(data, len);
+            }
+            else{
+                $("#show_object").html("搜索结果为空");
+            }
+        }
+    });
 }

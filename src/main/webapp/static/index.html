@@ -22,11 +22,10 @@
     <div class="row">
         <div class="col-md-9">
             <input type="text" maxlength="40" class="form-control normal-font" placeholder="search for..."
-                   aria-describedby="_Search"
-                   id="search_str" style="height: 38px">
+                   aria-describedby="_Search" max="30" id="search_str" style="height: 38px">
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-success normal-font"
+            <button type="button" class="btn btn-success normal-font" onclick="search()"
                     style="background-color: #FFF0F0; border: 0; color: black; height: 38px;">search
             </button>
         </div>
@@ -67,11 +66,17 @@
             <article class="col-lg-3">
                 <a href="https://store.steampowered.com/app/294100/RimWorld/">
                     <p class="object_id">1</p>
+
                     <div>
                         <img alt="RimWorld" class="img-responsive" src="../../image/object_img/RimWorld.jpg">
                     </div>
-                    <div>
-                        <p class="object_name">RimWorld</p>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="object_name">RimWorld</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="object_type">game</p>
+                        </div>
                     </div>
                 </a>
             </article>
@@ -97,6 +102,14 @@
                 }
             }
         });
+        $("#search_str").mouseleave(search);
     });
+
+    function search() {
+        var theStr = $.trim($('#search_str').val());
+        $('#search_str').val(theStr);
+        searchObject(theStr)
+        //alert($.trim(  $('#search_str').val() ))
+    }
 </script>
 </html>

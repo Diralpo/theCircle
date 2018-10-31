@@ -53,22 +53,29 @@
 }
 
 #show_object article.col-lg-3 {
-    height: 240px;
+    height: 260px;
     margin-top: 6px;
     margin-bottom: 6px;
 }
 
 #show_object img.img-responsive {
-    min-height: 200px;
-    max-height: 210px;
+    margin-top: 10px;
+    height: 200px;
 }
 
 #show_object p.object_id {
     display: none;
 }
 
-#show_object p.object_name {
+#show_object p.object_type{
     margin: 10px 0 0 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: black;
+}
+
+#show_object p.object_name {
+    margin: 6px 0 0 0;
     font-size: 16px;
 }
 
