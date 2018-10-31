@@ -19,7 +19,6 @@ public class ObjectsController extends Controller {
     }
 
     public void search(){
-        System.out.println("执行搜索操作");
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
         User current_user = getSessionAttr("current_user");
@@ -39,10 +38,4 @@ public class ObjectsController extends Controller {
         }
     }
 
-    public void query() {
-        String s = HttpKit.readData(getRequest());
-        Map map = new Gson().fromJson(s, Map.class);
-        System.out.println(map.get("obj_id").toString());
-        renderJson("{\"code\":400, \"detail\": \"这里是"+ map.get("obj_name").toString() + "  的介绍\"}");
-    }
 }

@@ -70,14 +70,14 @@
 <script>
     $(function () {
         var nickname = sessionStorage.getItem('nickname');
-        console.log(nickname)
+        console.log(nickname);
         if (nickname != null) {
-            $('#unlogin').css('display', 'none')
-            $('#login').css('display', 'block')
+            $('#unlogin').css('display', 'none');
+            $('#login').css('display', 'block');
             $('#userMenu').text("hello " + nickname)
         }
         else {
-            $('#unlogin').css('display', 'block')
+            $('#unlogin').css('display', 'block');
             $('#login').css('display', 'none')
         }
     })
@@ -85,7 +85,7 @@
 
 <script>
     function logout() {
-        console.log("maskdmskdk")
+        console.log("maskdmskdk");
         var data = {"email": sessionStorage.getItem("email")};
         $.ajax({
             type: 'POST',
@@ -101,7 +101,12 @@
                     sessionStorage.removeItem("school_id");
                     window.location.href = "index.html";
                 } else if (code_return == 400) {
-                    alert("系统出错，前后端记录用户不一致")
+                    alert("系统出错，前后端记录用户不一致");
+                    sessionStorage.removeItem("email");
+                    sessionStorage.removeItem("nickname");
+                    sessionStorage.removeItem("password");
+                    sessionStorage.removeItem("school_id");
+                    window.location.href = "index.html";
                 } else {
                     alert("系统出错啦");
                 }

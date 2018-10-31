@@ -88,6 +88,12 @@
 </div>
 </body>
 <script>
+    function search() {
+        var theStr = $.trim($('#search_str').val());
+        $('#search_str').val(theStr);
+        searchObject(theStr)
+    }
+
     $(document).ready(function () {
         // 文档加载完毕，从数据库中读取需要的信息
         $.ajax({
@@ -102,14 +108,7 @@
                 }
             }
         });
-        $("#search_str").mouseleave(search);
+        $("#search_str").blur(search);
     });
-
-    function search() {
-        var theStr = $.trim($('#search_str').val());
-        $('#search_str').val(theStr);
-        searchObject(theStr)
-        //alert($.trim(  $('#search_str').val() ))
-    }
 </script>
 </html>
