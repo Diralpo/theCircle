@@ -28,7 +28,7 @@ function loadObject(data, len) {
                 data[i]['obj_href'] +
                 "\"><p class=\"object_id\">" +
                 data[i]['obj_id'] +
-                "</p><div><img alt=\"" +
+                "</p><div class=\"img_div\"><img alt=\"" +
                 data[i]['obj_name'] +
                 "\" class=\"img-responsive\" src=\"" +
                 data[i]['obj_img_href']+

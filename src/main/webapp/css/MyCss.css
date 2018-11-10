@@ -53,14 +53,20 @@
 }
 
 #show_object article.col-lg-3 {
-    height: 260px;
+    height: 220px;
     margin-top: 6px;
     margin-bottom: 6px;
 }
 
+#show_object div.img_div{
+    height: 160px;
+    width: 160px;
+}
+
 #show_object img.img-responsive {
     margin-top: 10px;
-    height: 200px;
+    height: 100%;
+    width: 100%;
 }
 
 #show_object p.object_id {
