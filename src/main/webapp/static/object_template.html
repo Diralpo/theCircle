@@ -13,7 +13,12 @@
     <script src="../js/jquery.cookie.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/star-rating.min.js"></script>
-
+    <style>
+        .img-display {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
 </head>
 <body>
 <nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
@@ -26,10 +31,33 @@
         <div class="col-md-3" style="text-align: center"></div>
         <div class="col-md-5 normal-font">
             <div id="content" style="margin-top: 30px">
-                <h1>game1</h1>
+                <h1 id="objectName"></h1>
                 <div id="content-info" style="float: left">
-                    <div id="img" style="float: left">
-                        <img src="../image/object_img/RimWorld.jpg">
+                    <div style="float: left">
+                        <div style="width: 200px;height: 200px">
+                            <img id="objectImg" class="img-display" src="../image/object_img/RimWorld.jpg">
+                        </div>
+
+                        <div id="score">
+                            <form>
+                                <label for="input_score">评分</label>
+                                <input style="display: inline" id="input_score" name="input_score" class="rating"
+                                       value="0">
+                                <button class="btn btn-default" type="submit"
+                                        style="background-color:purple; color: white; border: none">提交评分
+                                </button>
+                            </form>
+                            <script>
+                                $("#input_score").rating({
+                                    min: 0,
+                                    max: 5,
+                                    step: 0.5,
+                                    size: "xxs",
+                                    showClear: false,
+                                    showCaption: false,
+                                })
+                            </script>
+                        </div>
                     </div>
                     <div id="info" style="margin-left:10px;float: right">
                         <span>发行公司：</span>我发行的
@@ -38,31 +66,14 @@
                         <br>
                         <span>其他信息：</span>充数的
                         <br>
-                    </div>
-                    <div id="score">
-                        <form>
-                            <label for="input_score">评分</label>
-                            <input style="display: inline" id="input_score" name="input_score" class="rating" value="0">
-                            <button class="btn btn-default" type="submit"
-                                    style="background-color:purple; color: white; border: none">提交评分
-                            </button>
-                        </form>
-                        <script>
-                            $("#input_score").rating({
-                                min: 0,
-                                max: 5,
-                                step: 0.5,
-                                size: "xxs",
-                                showClear: false,
-                                showCaption: false,
-                            })
-                        </script>
+                        <span id="objectBuy" href="%">进入购买页面</span>
+                        <br>
                     </div>
                 </div>
 
                 <div style="float: right;border-left: solid purple 1px">
                     <div style="margin-left: 10px">
-                    <p>theCircle评分</p>
+                        <p>theCircle评分</p>
                         <div>
                             <strong style="font-size: 30px">
                                 10.0
@@ -72,7 +83,7 @@
                 </div>
             </div>
 
-            <div style="margin-top: 250px" id="brief-introduction">
+            <div style="margin-top: 350px" id="brief-introduction">
                 <h2>简介</h2>
                 <div style=" margin-top:10px; border-top: solid purple 1px">
                     <p class="normal-font">
@@ -93,12 +104,65 @@
                 </div>
             </div>
 
+            <div style="margin-top: 50px">
+            <form role="form" >
+                <div class="form-group">
+                    <label>发表评论</label>
+                    <textarea class="form-control" rows="4" id="comment_textarea"></textarea>
+                    <button class="btn btn-default" type="submit"
+                            style="background-color:purple; color: white; border: none;margin-top: 10px"
+                    onclick="submitComment()">提交
+                    </button>
+                </div>
+            </form>
+            </div>
 
 
         </div>
         <div class="col-md-3" style="text-align: center"></div>
-</div>
+    </div>
 
 </div>
 </body>
+<script>
+    $(document).ready(function (){
+        console.log(sessionStorage.getItem("obj_name"));
+        console.log("end");
+        $("#objectName").append(sessionStorage.getItem("obj_name"));
+        $("#objectImg").attr('src',sessionStorage.getItem("obj_img_href"));
+        $("#objectBuy").attr('href',sessionStorage.getItem("obj_href"));
+    })
+</script>
+<script>
+    function submitComment() {
+        var text = $('#comment_textarea').val();
+        var u_id = sessionStorage.getItem("u_id");
+        if(u_id==null){
+            alert("请先登录");
+            return;
+        }
+        var data = {
+            "u_id": u_id,
+            "obj_id":sessionStorage.getItem("obj_id"),
+            "text":text,
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/object/addComment',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+
+                var code_return = data_return["code"];
+
+                console.log(code_return);
+                if (code_return == 200) {
+                    console.log("add comment success");
+                } else {
+                    alert("系统出错");
+                }
+            }
+        });
+    }
+</script>
 </html>

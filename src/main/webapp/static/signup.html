@@ -132,6 +132,8 @@
                     var nickname_return = data_return["nickname"];
                     var password_return = data_return["password"];
                     var school_id_return = data_return["school_id"];
+                    var u_id = data_return["u_id"]
+                    essionStorage.setItem("u_id", u_id);
                     sessionStorage.setItem("email", email_return);
                     sessionStorage.setItem("nickname", nickname_return);
                     sessionStorage.setItem("password", password_return);

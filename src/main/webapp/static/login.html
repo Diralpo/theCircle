@@ -59,19 +59,20 @@
             url: '/logIn',
             data: JSON.stringify(data),  //转化字符串
             contentType: 'application/json; charset=UTF-8',
-            success: function (data_return) { //成功的话，得到消息
+            success: function (data_return) {
+                //成功的话，得到消息
                 var code_return = data_return["code"];
                 var email_return = data_return["email"];
                 var nickname_return = data_return["nickname"];
                 var password_return = data_return["password"];
                 var school_id_return = data_return["school_id"];
                 if (code_return == 200) {
-
+                    console.log("login sucess");
+                    sessionStorage.setItem("u_id",data_return["u_id"]);
                     sessionStorage.setItem("email", email_return);
                     sessionStorage.setItem("nickname", nickname_return);
                     sessionStorage.setItem("password", password_return);
                     sessionStorage.setItem("school_id", school_id_return);
-
                     window.location.href = "index.html";
                 } else if (code_return == 400) {
                     var warning = $("<p></p>").text("账号或密码错误").css("color", "purple");

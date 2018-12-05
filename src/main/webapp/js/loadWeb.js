@@ -24,9 +24,8 @@ String.prototype.format = function (args) {// 格式化字符串
 function loadObject(data, len) {
     if (len > 0) {
         for (var i = 0; i < len; i++) {
-            var newP = $("<article class=\"col-lg-3\"><a href=\"" +
-                data[i]['obj_href'] +
-                "\"><p class=\"object_id\">" +
+            var newP = $("<article class=\"col-lg-3\"><a class='button' onclick='jump_to_object("+data[i]["obj_id"]+")'>" +
+                "<p class=\"object_id\">" +
                 data[i]['obj_id'] +
                 "</p><div class=\"img_div\"><img alt=\"" +
                 data[i]['obj_name'] +
@@ -52,7 +51,7 @@ function searchObject(theStr) {
     var data = {"keyword": theStr, "email": sessionStorage.getItem("email")};
     $.ajax({
         type: 'POST',
-        url: '/object/search',
+        url: '/object/search_by_likeName',
         data: JSON.stringify(data),  //转化字符串
         contentType: 'application/json; charset=UTF-8',
         success: function (data_return) { //成功的话，得到消息
@@ -65,6 +64,33 @@ function searchObject(theStr) {
             else{
                 $("#show_object").html("搜索结果为空");
             }
+        }
+    });
+}
+
+function jump_to_object(id) {
+    var data = {
+        "object_id":id,
+        "email": sessionStorage.getItem("email")
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/object/search_by_id',
+        data: JSON.stringify(data),  //转化字符串
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data_return) { //成功的话，得到消息
+            var object_data = eval(data_return);
+            console.log("123");
+            console.log(object_data[0]["obj_name"]);
+            console.log(object_data[0]);
+            sessionStorage.setItem("obj_id", object_data[0]["obj_id"]);
+            sessionStorage.setItem("obj_name", object_data[0]["obj_name"]);
+            sessionStorage.setItem("obj_href", object_data[0]["obj_href"]);
+            sessionStorage.setItem("obj_img_href", object_data[0]["obj_img_href"]);
+            sessionStorage.setItem("obj_type", object_data[0]["obj_type"]);
+            sessionStorage.setItem("obj_status", object_data[0]["obj_status"]);
+
+            window.location.href = "object_template.html";
         }
     });
 }

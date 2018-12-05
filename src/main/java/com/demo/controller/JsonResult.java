@@ -2,13 +2,15 @@ package com.demo.controller;
 
 public class JsonResult {
     public Object code;
+    public Object u_id;
     public Object email;
     public Object password;
     public Object nickname;
     public Object school_id;
 
-    public JsonResult(Object code,Object email,Object password,Object nickname,Object school_id){
+    public JsonResult(Object code,Object u_id,Object email,Object password,Object nickname,Object school_id){
         this.code = code;
+        this.u_id = u_id;
         this.password = password;
         this.email = email;
         this.nickname = nickname;
@@ -18,6 +20,14 @@ public class JsonResult {
 
     public Object getCode() {
         return code;
+    }
+
+    public Object getU_id() {
+        return u_id;
+    }
+
+    public void setU_id(Object u_id) {
+        this.u_id = u_id;
     }
 
     public void setCode(Object code) {
