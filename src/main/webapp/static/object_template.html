@@ -43,7 +43,7 @@
                                 <label for="input_score">评分</label>
                                 <input style="display: inline" id="input_score" name="input_score" class="rating"
                                        value="0">
-                                <button class="btn btn-default" type="submit"
+                                <button class="btn btn-default" type="button"
                                         style="background-color:purple; color: white; border: none">提交评分
                                 </button>
                             </form>
@@ -93,14 +93,11 @@
 
             </div>
 
-            <div id="comment">
+            <div>
 
                 <h2>用户评论</h2>
-
-                <div style=" margin-top:10px; border-top: solid purple 1px">
-                    <p class="normal-font">
-                        这里是简介balabala
-                    </p>
+                <div class="comment" id = "comment">
+                    
                 </div>
             </div>
 
@@ -109,7 +106,7 @@
                 <div class="form-group">
                     <label>发表评论</label>
                     <textarea class="form-control" rows="4" id="comment_textarea"></textarea>
-                    <button class="btn btn-default" type="submit"
+                    <button class="btn btn-default" type="button"
                             style="background-color:purple; color: white; border: none;margin-top: 10px"
                     onclick="submitComment()">提交
                     </button>
@@ -127,10 +124,35 @@
 <script>
     $(document).ready(function (){
         console.log(sessionStorage.getItem("obj_name"));
-        console.log("end");
+        var data={
+            obj_id:sessionStorage.getItem("obj_id")
+        }
+
         $("#objectName").append(sessionStorage.getItem("obj_name"));
         $("#objectImg").attr('src',sessionStorage.getItem("obj_img_href"));
         $("#objectBuy").attr('href',sessionStorage.getItem("obj_href"));
+
+        $.ajax({
+            type:'POST',
+            url:'/object/getObjectComments',
+            data:JSON.stringify(data),
+            contentType:'application/json; charset=UTF-8',
+            success:function(data_return){
+                var commentsJson = eval(data_return);
+                var len = commentsJson.length;
+                for(var i=0;i<len;i++){
+                    var comment = $(
+                        "<div class=\"comment_details\">"+
+                        "<div style=\"float:left;\">"+
+                        "<span class=\"comment_name\">用户id:"+commentsJson[i]['com_creator_id']+" </span>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_last_modify_time']+"</span></div>"+
+                        "<div class=\"del\">"+
+                        "</div> <div class=\"comment_content\" >"+commentsJson[i]['com_details']+"</div>"+
+                        "</div>");
+                    $("#comment").append(comment);
+                }
+            }
+
+        })
     })
 </script>
 <script>
@@ -154,9 +176,8 @@
             success: function (data_return) {
 
                 var code_return = data_return["code"];
-
-                console.log(code_return);
                 if (code_return == 200) {
+                    $('#comment_textarea').clear();
                     console.log("add comment success");
                 } else {
                     alert("系统出错");

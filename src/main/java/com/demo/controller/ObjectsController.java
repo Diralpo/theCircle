@@ -3,6 +3,7 @@ package com.demo.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.demo.model.Comment;
 import com.jfinal.kit.HttpKit;
 import com.google.gson.Gson;
 import com.jfinal.core.Controller;
@@ -71,6 +72,13 @@ public class ObjectsController extends Controller {
         }else{
             renderJson("{\"code\":400}");
         }
+    }
+
+    public void getObjectComments(){
+        String s=HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        List<Comment> comments= Comment.dao.find("select * from comment where com_obj_id="+map.get("obj_id"));
+        renderJson(comments);
     }
 
 }
