@@ -97,7 +97,7 @@
 
                 <h2>用户评论</h2>
                 <div class="comment" id = "comment">
-                    
+
                 </div>
             </div>
 
@@ -144,7 +144,7 @@
                     var comment = $(
                         "<div class=\"comment_details\">"+
                         "<div style=\"float:left;\">"+
-                        "<span class=\"comment_name\">用户id:"+commentsJson[i]['com_creator_id']+" </span>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_last_modify_time']+"</span></div>"+
+                        "<span class=\"comment_name\">用户id:"+commentsJson[i]['com_creator_id']+" </span>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_create_time']+"</span></div>"+
                         "<div class=\"del\">"+
                         "</div> <div class=\"comment_content\" >"+commentsJson[i]['com_details']+"</div>"+
                         "</div>");
