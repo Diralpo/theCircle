@@ -1,3 +1,61 @@
+// 将url中的参数转化为字典
+function get_query_object(url) {
+    url = url == null ? window.location.href : url;
+    var search = url.substring(url.lastIndexOf("?") + 1);
+    var obj = {};
+    var reg = /([^?&=]+)=([^?&=]*)/g;
+    search.replace(reg, function (rs, $1, $2) {
+        var name = decodeURIComponent($1);
+        var val = decodeURIComponent($2);
+        val = String(val);
+        obj[name] = val;
+        return rs;
+    });
+    return obj;
+}
+
+// 将字典转化为url参数
+function param(a) {
+    var s = [], rbracket = /\[\]$/,
+        isArray = function (obj) {
+            return Object.prototype.toString.call(obj) === '[object Array]';
+        }, add = function (k, v) {
+            v = typeof v === 'function' ? v() : v === null ? '' : v === undefined ? '' : v;
+            s[s.length] = encodeURIComponent(k) + '=' + encodeURIComponent(v);
+        }, buildParams = function (prefix, obj) {
+            var i, len, key;
+
+            if (prefix) {
+                if (isArray(obj)) {
+                    for (i = 0, len = obj.length; i < len; i++) {
+                        if (rbracket.test(prefix)) {
+                            add(prefix, obj[i]);
+                        } else {
+                            buildParams(prefix + '[' + (typeof obj[i] === 'object' ? i : '') + ']', obj[i]);
+                        }
+                    }
+                } else if (obj && String(obj) === '[object Object]') {
+                    for (key in obj) {
+                        buildParams(prefix + '[' + key + ']', obj[key]);
+                    }
+                } else {
+                    add(prefix, obj);
+                }
+            } else if (isArray(obj)) {
+                for (i = 0, len = obj.length; i < len; i++) {
+                    add(obj[i].name, obj[i].value);
+                }
+            } else {
+                for (key in obj) {
+                    buildParams(key, obj[key]);
+                }
+            }
+            return s;
+        };
+
+    return buildParams('', a).join('&').replace(/%20/g, '+');
+}
+
 String.prototype.format = function (args) {// 格式化字符串
     var result = this;
     if (arguments.length > 0) {
@@ -66,6 +124,11 @@ function searchObject(theStr) {
             }
         }
     });
+}
+
+function jump_to_user_index(nickname){
+    var data={'nickname': nickname};
+    window.location.href = "user.html?"+param(data);
 }
 
 function jump_to_object(id) {

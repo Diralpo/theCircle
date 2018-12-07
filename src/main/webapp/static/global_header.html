@@ -45,7 +45,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/static/index.html">TheCircle</a></li>
 
-                <li><a href="/static/query.html">Query</a></li>
+                <li><a onclick="jump_to_user_index('esfan')">Query</a></li>
 
                 <li><a href="/static/model.html">Model</a></li>
 
@@ -57,7 +57,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu normal-font" aria-labelledby="userMenu">
-                        <li><a href="#">个人主页</a></li>
+                        <li><a id="selfindex">个人主页</a></li>
                         <li><a class="btn" onclick="logout()">登出</a></li>
                     </ul>
                 </li>
@@ -74,11 +74,13 @@
         if (nickname != null) {
             $('#unlogin').css('display', 'none');
             $('#login').css('display', 'block');
-            $('#userMenu').text("hello " + nickname)
+            $('#userMenu').text("hello " + nickname);
+            $('#selfindex').attr('onclick', 'jump_to_user_index(\'' + nickname + '\')' )
         }
         else {
             $('#unlogin').css('display', 'block');
-            $('#login').css('display', 'none')
+            $('#login').css('display', 'none');
+            $('#selfindex').attr('onclick', '')
         }
     })
 </script>
@@ -94,19 +96,19 @@
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) {//成功的话，得到消息
                 var code_return = data_return["code"];
-                if (code_return == 200) {
+                if (code_return === 200) {
                     sessionStorage.removeItem("email");
                     sessionStorage.removeItem("nickname");
                     sessionStorage.removeItem("password");
                     sessionStorage.removeItem("school_id");
-                    window.location.href = "index.html";
-                } else if (code_return == 400) {
+                    window.location.href = "/";
+                } else if (code_return === 400) {
                     alert("系统出错，前后端记录用户不一致");
                     sessionStorage.removeItem("email");
                     sessionStorage.removeItem("nickname");
                     sessionStorage.removeItem("password");
                     sessionStorage.removeItem("school_id");
-                    window.location.href = "index.html";
+                    window.location.href = "/";
                 } else {
                     alert("系统出错啦");
                 }
