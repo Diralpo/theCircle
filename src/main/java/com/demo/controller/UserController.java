@@ -85,15 +85,12 @@ public class UserController extends Controller {
     public void user(){
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
-
         String nickname = map.get("nickname").toString();
-
         User current_user = getSessionAttr("current_user");
-
         List<Record> userinfo;
         // 将用户对个人资料的修改放到后台验证
         if(current_user!=null && nickname.equals(current_user.get("u_nickname"))){
-            System.out.println("find1 "+nickname);
+            //System.out.println("find1 "+nickname);
             userinfo = Db.find("select u_nickname,u_photo,u_sex,u_permissions,u_status," +
                     "u_email, u_create_time, uni_name " +
                     "from users, university where u_nickname=\"" + nickname+
@@ -101,7 +98,7 @@ public class UserController extends Controller {
             renderJson(userinfo);
         }
         else{
-            System.out.println("find2 "+nickname);
+            //System.out.println("find2 "+nickname);
             userinfo = Db.find("select u_nickname,u_photo,u_sex,uni_name " +
                     "from users, university where u_nickname=\"" + nickname+
                     "\"and users.u_uni_id=university.uni_id");

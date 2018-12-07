@@ -7,17 +7,21 @@
     <title>个人主页</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/MyCss.css" rel="stylesheet">
+    <link href="../css/popup.css" rel="stylesheet">
 
     <script src="../js/jquery-3.3.1.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/loadWeb.js"></script>
     <script src="../js/user_information.js"></script>
+    <script src="../js/popup.js"></script>
+    <script src="../js/about_message.js"></script>
 </head>
 <body>
 <nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
 <script>
     $("#global_header").load("../static/global_header.html")
 </script>
+
 
 <div class="container" style="width: 90%;">
     <div class="row">
@@ -26,6 +30,7 @@
             <img alt="avatar" class="img-responsive" src="../../image/favicon.ico"
                  style="height: 160px; width: 160px;">
             <p id="u_nickname" style="font-size: 24px;"></p>
+            <button type="button" class="btn btn-info" id="send_message_button" onclick="pop_up_message()">send message</button>
         </div>
         <div class="col-md-8">
             <div class="row">

@@ -38,15 +38,18 @@ function get_user_info(){
             $('#uni_name').attr('placeholder', user_data[0]["uni_name"]);
             $('#u_nickname').text(user_data[0]["u_nickname"]);
 
+
             if (user_data[0].hasOwnProperty('u_email')) {
                 $('#privacyInfo').css('display', "block");
                 $('#u_email').attr('placeholder', user_data[0]["u_email"]);
                 $('#u_create_time').attr('placeholder', user_data[0]["u_create_time"]);
                 $('#u_permissions').attr('placeholder', user_data[0]["u_permissions"]);
+                $('#send_message_button').css('display', "none");
             }
             else{
                 $('#u_sex').find('a').attr('onclick', '');
                 $('#privacyInfo').css('display', "none");
+                $('#send_message_button').css('display', "block");
             }
             //window.location.href = "user.html";
         }

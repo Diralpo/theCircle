@@ -1,8 +1,10 @@
 package com.demo.config;
 
+import com.demo.controller.MessageController;
 import com.demo.controller.ObjectsController;
 import com.demo.controller.UserController;
 import com.demo.model.Comment;
+import com.demo.model.TheMessage;
 import com.demo.model.TheObject;
 import com.demo.model.User;
 import com.jfinal.config.*;
@@ -30,6 +32,7 @@ public class DemoConfig extends JFinalConfig {
     public void configRoute(Routes me) {
         me.add("/", UserController.class);
         me.add("/object", ObjectsController.class);
+        me.add("/message", MessageController.class);
     }
 
     @Override
@@ -53,6 +56,7 @@ public class DemoConfig extends JFinalConfig {
             arp.addMapping("users", "u_id", User.class);
             arp.addMapping("object", "obj_id", TheObject.class);
             arp.addMapping("comment","com_id",Comment.class);
+            arp.addMapping("message","pm_id", TheMessage.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
