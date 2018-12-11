@@ -20,7 +20,7 @@ public class ObjectsController extends Controller {
 
     public void seekObject() {
         List<TheObject> objects = TheObject.dao.find("select obj_id,obj_name,obj_href,obj_img_href,obj_type " +
-                "from object where obj_status=1 order by obj_last_modify_time");
+                "from object where obj_status=1 order by obj_last_modify_time desc");
         renderJson(objects);
     }
 
@@ -67,13 +67,12 @@ public class ObjectsController extends Controller {
     public void addComment(){
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
-        Date date=new Date();
+        System.out.println(map);
         User current_user = getSessionAttr("current_user");
-        if(current_user!=null && current_user.get("u_id")==map.get("u_id")) {
-            Record new_commnet = new Record().set("com_status", 1).set("com_creator_id", map.get("u_id"))
+        if(current_user!=null && current_user.get("u_id").toString().equals( map.get("u_id").toString())) {
+            Record new_comment = new Record().set("com_status", 1).set("com_creator_id", map.get("u_id"))
                     .set("com_obj_id", map.get("obj_id")).set("com_details", map.get("text"));
-            boolean success = Db.save("comment", "com_id", new_commnet);
-
+            boolean success = Db.save("comment", "com_id", new_comment);
             if (!success) {
                 renderJson("{\"code\":400}");
             } else {

@@ -53,7 +53,7 @@ public class MessageController  extends Controller {
         String sql = "select pm_id, u_nickname,pm_details,pm_sending_time,pm_status from message,users " +
                 "where users.u_id=message.pm_sender_id and pm_receiver_id=" + current_user.get("u_id")+
         " order by " +
-                "message.pm_sending_time " ;
+                "message.pm_sending_time desc" ;
         List<Record> messages = Db.find(sql);
         renderJson(messages);
     }
