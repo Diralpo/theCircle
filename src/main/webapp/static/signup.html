@@ -34,6 +34,9 @@
                 <h4 style="color: purple;margin-top: 30px">用户名</h4>
                 <input type="text" id="userName"
                        style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+                <h4 style="color: purple;margin-top: 30px">用户头像外链</h4>
+                <input type="text" id="userPhoto"
+                       style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
                 <p id="userName_error" style="color: purple;display: none">用户名格式错误</p>
 
                 <h4 style="color: purple;margin-top: 30px">密码</h4>
@@ -126,12 +129,16 @@
     }
 
     function signup(email, nickname, pwd, sex, university) {
+        var u_photo = $('#userPhoto').val();
+        if(u_photo==='')
+            u_photo = '../../image/favicon.ico';
         var data = {
             "email": email,
             "nickname": nickname,
             'password': pwd,
             'sex': sex,
-            'university':$('#university').val()
+            'university':$('#university').val(),
+            'u_photo': u_photo
         };
         $.ajax({
             type: 'POST',
