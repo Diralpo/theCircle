@@ -40,19 +40,14 @@
             <div class="list-group" id = "group_list" style="width: 70%;margin-left: 50px">
 
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="根据学校搜索">
+                    <input type="text" class="form-control" id ="uni_name" placeholder="根据学校搜索">
                     <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">搜索</button>
+                            <button class="btn btn-default" type="button" onclick="search_group_by_uni()">搜索</button>
                         </span>
                 </div>
+                <div id = "show_group_list">
 
-                <a href="#" class="list-group-item">
-                    Cras justo odio
-                </a>
-                <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-                <a href="#" class="list-group-item">Morbi leo risus</a>
-                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                <a href="#" class="list-group-item">Vestibulum at eros</a>
+                </div>
             </div>
         </div>
 
@@ -224,11 +219,11 @@
     }
     function refresh_group_list(){
         var data={
-            obj_id:sessionStorage.getItem("obj_id")
+            'obj_id':sessionStorage.getItem("obj_id")
         };
         $.ajax({
             type:'POST',
-            url:'/object/getGroupList',
+            url:'/group/getGroupList',
             data:JSON.stringify(data),
             contentType:'application/json; charset=UTF-8',
             success:function(data_return){
@@ -238,9 +233,11 @@
                     $("#group_list").append($("<p style=\"margin-top: 10px\">暂时没有小组</p>"));
                 }else{
                     for(var i=0;i<len;i++){
+                        var groupId = groupJson[i]["gro_id"];
                         var content = $(
-                            "<a href=\"#\" class=\"list-group-item\">Dapibus ac facilisis in</a>"
-                        )
+                            "<a href=\""+"group.html?"+param({"gro_id":groupId})+"\" class=\"list-group-item\">"+groupJson[i]["gro_name"]+"-"+groupJson[i]["uni_name"]+"</a>"
+                        );
+                        $("#show_group_list").append(content);
                     }
                 }
             }
@@ -303,6 +300,37 @@
                     refresh_com_list();
                 } else {
                     alert("系统出错");
+                }
+            }
+        });
+    }
+</script>
+<script>
+    function search_group_by_uni() {
+        var data={
+            'obj_id':sessionStorage.getItem("obj_id"),
+            "uni_name":$("#uni_name").val()
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/group/search_group_by_uni',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                $("#show_group_list").empty();
+                var groupJson = eval(data_return);
+                var len = groupJson.length;
+                if(len==0){
+                    $("#group_list").append($("<p style=\"margin-top: 10px\">无结果</p>"));
+                }else{
+                    for(var i=0;i<len;i++){
+                        var groupId = groupJson[i]["gro_id"];
+                        var content = $(
+                            "<a href=\""+"group.html?"+param({"gro_id":groupId})+"\" class=\"list-group-item\">"+groupJson[i]["gro_name"]+"-"+groupJson[i]["uni_name"]+"</a>"
+                        );
+                        $("#show_group_list").append(content);
+
+                    }
                 }
             }
         });

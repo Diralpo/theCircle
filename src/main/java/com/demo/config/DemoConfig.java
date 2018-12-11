@@ -55,7 +55,7 @@ public class DemoConfig extends JFinalConfig {
             arp.addMapping("comment","com_id",Comment.class);
             arp.addMapping("message","pm_id", TheMessage.class);
             arp.addMapping("university","uni_id", University.class);
-            arp.addMapping("groups","gro_id",Group.class);
+            arp.addMapping("thegroup","gro_id",Group.class);
             arp.addMapping("user_group_relation","ugr_user_id",User_group.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());

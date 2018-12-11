@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>小组</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/MyCss.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/star-rating.css" rel="stylesheet">
+    <link href="../css/ghost_css.css" rel="stylesheet">
+
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/star-rating.min.js"></script>
+    <script src="../js/loadWeb.js"></script>
+    <style>
+        .img-display {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+<nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
+<script>
+    $("#global_header").load("../static/global_header.html")
+</script>
+<div class="aw-container-wrap">
+    <div class="container">
+        <div class="row" style="zoom: 110%">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-9 aw-main-content">
+                    <div class="aw-mod aw-topic-detail-title">
+                        <div class="mod-body">
+                            <img class = "img-responsive" style="zoom: 7%;float:left" src="../image/object_img/RimWorld.jpg" alt="object"/>
+                            <h2 class="pull-left">object_name_university </h2>
+                            <div class="aw-topic-operate text-color-999">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aw-mod aw-topic-list-mod">
+                        <div class="mod-head">
+                            <div class="tabbable">
+                                <!-- tab 切换 -->
+                                <ul class="nav nav-tabs aw-nav-tabs hidden-xs">
+                                    <li class="active"><a href="#all" data-toggle="tab">公告</a></li>
+                                    <li><a href="#best_answers" data-toggle="tab">小组介绍</a></li>
+                                    <li><a href="#about" id="i_about" data-toggle="tab">小组成员</a></li>
+                                </ul>
+                                <!-- end tab 切换 -->
+                            </div>
+                        </div>
+
+                        <div class="mod-body">
+                            <!-- tab 切换内容 -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="all">
+                                    <!-- 推荐问题 -->
+                                    <!-- end 推荐问题 -->
+                                    <div class="aw-mod">
+                                        <div class="mod-body">
+                                            <div class="aw-common-list" id="c_all_list">
+                                                <div class="aw-item " data-topic-id="73,11,">
+                                                    <div class="aw-question-content">
+                                                        <h4>
+                                                            <a href="http://wenda.ghostchina.com/question/569">该小组解散了</a>
+                                                        </h4>
+                                                        <p>
+                                                            <a href="http://wenda.ghostchina.com/people/gavin"
+                                                               class="aw-user-name" data-id="1533">马浩翔</a>
+                                                            <span class="text-color-999">发布了该公告 • 2 人关注 • 1 个回复 • 2406 次浏览 • 2017-06-10 08:48				</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane" id="about">
+                                    <div class="aw-topic-detail-about text-color-666 markitup-box">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end tab 切换内容 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 侧边栏 -->
+                <div class="col-sm-12 col-md-3 aw-side-bar hidden-xs">
+                    <!-- 话题描述 -->
+                    <div class="aw-mod aw-text-align-justify">
+                        <div class="mod-head">
+                            <h3>object描述</h3>
+                        </div>
+                        <div class="mod-body">
+                        </div>
+                    </div>
+                    <!-- end 话题描述 -->
+                    <!-- 最佳回复者 -->
+                    <div class="aw-mod">
+                        <div class="mod-head">
+                            <h3>小组创建者与管理员</h3>
+                        </div>
+
+                        <div class="mod-body">
+                            <dl>
+                                <dt class="pull-left aw-border-radius-5">
+                                    <a href="http://wenda.ghostchina.com/people/error"><img
+                                            src="http://wenda.ghostchina.com/uploads/avatar/000/00/03/86_avatar_mid.jpg"
+                                            alt=""/></a>
+                                </dt>
+
+                                <dd class="pull-left">
+                                    <a class="aw-user-name" href="http://wenda.ghostchina.com/people/error"
+                                       data-id="386">mbra </a>
+                                    <p>获得 <b>3</b> 次赞同, <b>1000000</b> 次感谢</p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!-- end 最佳回复者 -->
+
+                    <!-- xx人关注该话题 -->
+                    <div class="aw-mod topic-status">
+                        <div class="mod-head">
+                            <h3>2 人参与了该小组</h3>
+                        </div>
+                        <div class="mod-body">
+                            <div id="focus_users" class="aw-border-radius-5"></div>
+                        </div>
+                    </div>
+                    <!-- end xx人关注该话题 -->
+
+                    <!-- 话题修改记录 -->
+                    <!-- end 话题修改记录 -->
+
+                </div>
+                <!-- end 侧边栏 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
