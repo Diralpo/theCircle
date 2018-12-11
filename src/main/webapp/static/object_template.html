@@ -106,6 +106,7 @@
                                 10.0
                             </strong>
                         </div>
+                        <button class="btn btn-primary" id="add-focus" onclick="add_focus()">+关注</button>
                     </div>
                 </div>
             </div>
@@ -149,6 +150,45 @@
 </div>
 </body>
 <script>
+    function add_focus(){
+        var obj_id = sessionStorage.getItem("obj_id");
+        $.ajax({
+            type: 'POST',
+            url: '/object/addFocus',
+            data: JSON.stringify({'obj_id': obj_id}),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                var datares = eval(data_return);
+                if(datares['code']===400){
+                    alert("请先登录");
+                }
+                else
+                    $('#add-focus').attr('onclick', 'remove_focus()').text('取消关注').attr("class", "btn btn-warning");
+
+            }
+        });
+
+    }
+
+    function remove_focus(){
+        var obj_id = sessionStorage.getItem("obj_id");
+        $.ajax({
+            type: 'POST',
+            url: '/object/removeFocus',
+            data: JSON.stringify({'obj_id': obj_id}),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                var datares = eval(data_return);
+                if(datares['code']===400){
+                    alert("请先登录");
+                }
+                else if(datares['code']===200)
+                    $('#add-focus').attr('onclick', 'add_focus()').text('+关注').attr("class", "btn btn-primary");
+            }
+        });
+
+    }
+
     function refresh_com_list(){
         var data={
             obj_id:sessionStorage.getItem("obj_id")
@@ -169,12 +209,14 @@
                     for(var i=0;i<len;i++){
                         var comment = $(
                             "<div class=\"comment_details\">"+
-                            "<div style=\"float:left;\">"+
-                            "<span class=\"comment_name\">"+commentsJson[i]['u_nickname']+" </span>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_create_time']+"</span></div>"+
+                            "<div style=\"float:left;\">"+"<a class='comment_nickname'>"+
+                            "<span class=\"comment_name\">"+commentsJson[i]['u_nickname']+"</span></a>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_create_time']+"</span></div>"+
                             "<div class=\"del\">"+
                             "</div> <div class=\"comment_content\" >"+commentsJson[i]['com_details']+"</div>"+
                             "</div>");
-                        $("#comment").append(comment);
+                        $("#comment").append(comment).find(".comment_details").last().find(".comment_nickname").attr('onclick', "jump_to_user_index('" +
+                            commentsJson[i]['u_nickname'] + "')");
+
                     }
                 }
             }
@@ -210,6 +252,26 @@
         $("#objectImg").attr('src',sessionStorage.getItem("obj_img_href"));
         $("#objectBuy").attr('href',sessionStorage.getItem("obj_href"));
         $("#group_title").append("发现"+sessionStorage.getItem('obj_name')+"小组");
+
+
+        var obj_id = sessionStorage.getItem("obj_id");
+        $.ajax({
+            type: 'POST',
+            url: '/object/query_has_focused',
+            data: JSON.stringify({'obj_id': obj_id}),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                var res = eval(data_return);
+                if(res['code']===400){
+                    return;
+                }
+                if(res['result']===1){
+                    $('#add-focus').attr('onclick', 'remove_focus()').text('取消关注').attr("class", "btn btn-warning");
+                }
+            }
+        });
+
+
         refresh_com_list();
         refresh_group_list();
     })

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>查看消息</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/MyCss.css" rel="stylesheet">
+    <link href="../css/popup.css" rel="stylesheet">
+
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/loadWeb.js"></script>
+    <script src="../js/user_information.js"></script>
+    <script src="../js/popup.js"></script>
+    <script src="../js/about_message.js"></script>
+</head>
+<body>
+<nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
+<script>
+    $("#global_header").load("../static/global_header.html")
+</script>
+
+<div class="container" style="width: 90%;">
+    <div class="row">
+        <div class="col-md-2">
+            <div style="font-size: 18px">
+                <div>
+                    消息中心
+                </div>
+                <a>
+                    @我的
+                </a>
+                <br/>
+                <a>
+                    系统通知
+                </a>
+            </div>
+        </div>
+        <div class="col-md-8" id="show_message">
+            <!---
+            <div class="row reply-item">
+                <div class="col-md-1 top-left">
+                    <a class="sender-avatar"> <img src="../image/favicon.ico" style="width: 100%; height: auto;"/>
+                    </a>
+                </div>
+                <div class="col-md-11 top-right">
+                    <div class="name-box"><a target="_blank"
+                                             class="name sender-nickname" style="font-size: 14px;margin-right: 6px;">发送者昵称</a>
+                        <span class="message-time" style="font-size: 12px;">2018年</span>
+                    </div>
+                    <div class="comment-content"><span
+                            class="text">消息正文
+                        </span></div>
+                    <button class="btn reply-btn" onclick="pop_up_message(this)">回复</button>
+                </div>
+            </div>
+            -->
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+</body>
+<script>
+    $(document).ready(function () {
+        if(sessionStorage.getItem("u_id")===null){
+            alert("请先登录");
+            window.location.href = "/";
+            return;
+        }
+        refresh_message_list();
+    });
+</script>
+</html>

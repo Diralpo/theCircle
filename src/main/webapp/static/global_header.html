@@ -58,6 +58,7 @@
                     </a>
                     <ul class="dropdown-menu normal-font" aria-labelledby="userMenu">
                         <li><a id="selfindex">个人主页</a></li>
+                        <li><a href="../static/message.html">收件箱</a></li>
                         <li><a class="btn" onclick="logout()">登出</a></li>
                     </ul>
                 </li>
@@ -101,6 +102,7 @@
                     sessionStorage.removeItem("nickname");
                     sessionStorage.removeItem("password");
                     sessionStorage.removeItem("school_id");
+                    sessionStorage.removeItem("u_id");
                     window.location.href = "/";
                 } else if (code_return === 400) {
                     alert("系统出错，前后端记录用户不一致");
@@ -108,6 +110,7 @@
                     sessionStorage.removeItem("nickname");
                     sessionStorage.removeItem("password");
                     sessionStorage.removeItem("school_id");
+                    sessionStorage.removeItem("u_id");
                     window.location.href = "/";
                 } else {
                     alert("系统出错啦");
