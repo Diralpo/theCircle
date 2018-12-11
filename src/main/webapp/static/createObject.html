@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/MyCss.css" rel="stylesheet">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/user_header.js"></script>
+    <script src="../js/loadWeb.js"></script>
+</head>
+<body>
+<nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
+<script>
+    $("#global_header").load("../static/global_header.html")
+</script>
+
+<div class="container" style="margin-top: 50px">
+    <div class="row">
+
+        <div class="col-md-3 normal-font">
+
+                <p style="color: purple;font-size: 40px">注册新项目</p>
+                <h4 style="color: purple;margin-top: 30px"></h4>
+
+                <h4 style="color: purple;margin-top: 30px">项目类型</h4>
+                <select id="object_type" style="width: 250px;height: 40px;border: none">
+                    <option value="1">游戏</option>
+                    <option value="2">影音</option>
+                    <option value="3">体育</option>
+                </select>
+
+                <h4 style="color: purple;margin-top: 30px">项目名称</h4>
+                <input type="text" id="object_name"
+                       style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+                <p id="object_name_error" style="color: purple;display: none">项目名称错误</p>
+
+                <h4 style="color: purple;margin-top: 30px">发行公司/作者</h4>
+                <input type="text" id="object_writer"
+                       style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+                <p id="object_writer_error" style="color: purple;display: none">发行公司/作者格式错误</p>
+
+                <h4 style="color: purple;margin-top: 30px">发行时间</h4>
+                <input type="text" id="object_time"
+                       style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+                <p id="object_time_error" style="color: purple;display: none">发行时间错误</p>
+
+        </div>
+        <div class="col-md-3" style="text-align: center"></div>
+        <div class="col-md-3 normal-font">
+            <h4 style="color: purple;margin-top: 30px">官网链接</h4>
+            <input type="text" id="object_website_link"
+                   style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+            <p id="object_website_link_error" style="color: purple;display: none">官网链接错误</p>
+
+            <h4 style="color: purple;margin-top: 30px">获取链接</h4>
+            <input type="text" id="object_get_link"
+                   style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+            <p id="object_get_link_error" style="color: purple;display: none">获取链接错误</p>
+
+            <h4 style="color: purple;margin-top: 30px">图片链接(本网站没有ftp服务器，请使用外挂图床)</h4>
+            <input type="text" id="object_image_link"
+                   style="width:400px;border:none; border-bottom:3px solid purple;outline: none;">
+            <p id="object_image_error" style="color: purple;display: none">获取图片链接错误</p>
+
+            <form role="form" style=";margin-top: 30px">
+                <div class="form-group">
+                    <label>简介</label>
+                    <textarea class="form-control" rows="6" id="object_introduction" style="width: 400px"></textarea>
+                </div>
+            </form>
+        </div>
+        <button class="btn btn-default" type="submit" onclick="createObject()"
+                style="font-size:16px;margin-top: 100px;background-color:purple;color:white;width: 400px;height: 40px">
+            确认注册
+        </button>
+    </div>
+</div>
+
+</body>
+<script>
+    //一个简单的检验例子，待完善，优先度低
+
+    function createObject(data) {
+        var object_type = $("#object_type").val();
+        var object_name = $("#object_name").val();
+        var object_writer = $("#object_writer").val();
+        var object_time = $("#object_time").val();
+        var object_website_link = $("#object_website_link").val();
+        var object_get_link = $('#object_get_link').val();
+        var object_image_link = $('#object_image_link').val();
+        var object_introduction = $('#object_introduction').val();
+
+        if(object_type==1){
+            object_type = "game"
+        }else if(object_type==2){
+            object_type="tv"
+        }else{
+            object_type="sport"
+        }
+
+        var data={
+            "object_type":object_type,
+            "object_name":object_name,
+            "object_writer":object_writer,
+            "object_time":object_time,
+            "object_website_link":object_website_link,
+            "object_get_link":object_get_link,
+            "object_image_link":object_image_link,
+            "object_introduction":object_introduction,
+            "object_creator_id":sessionStorage.getItem("u_id")
+        };
+        $.ajax({
+            type:'POST',
+            url:'/object/createObject',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                var code_return = data_return["code"];
+                if (code_return == 200) {
+                    alert("新建成功，请等待审核")
+                } else if (code_return == 400) {
+                    alert("系统出错，建立失败")
+                } else {
+                    alert("系统出错");
+                }
+            }
+        });
+    }
+</script>
+</html>
