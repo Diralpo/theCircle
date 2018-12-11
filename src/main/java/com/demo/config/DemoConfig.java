@@ -2,11 +2,9 @@ package com.demo.config;
 
 import com.demo.controller.MessageController;
 import com.demo.controller.ObjectsController;
+import com.demo.controller.UniversityController;
 import com.demo.controller.UserController;
-import com.demo.model.Comment;
-import com.demo.model.TheMessage;
-import com.demo.model.TheObject;
-import com.demo.model.User;
+import com.demo.model.*;
 import com.jfinal.config.*;
 import com.jfinal.core.JFinal;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -33,6 +31,7 @@ public class DemoConfig extends JFinalConfig {
         me.add("/", UserController.class);
         me.add("/object", ObjectsController.class);
         me.add("/message", MessageController.class);
+        me.add("/university", UniversityController.class);
     }
 
     @Override
@@ -57,6 +56,7 @@ public class DemoConfig extends JFinalConfig {
             arp.addMapping("object", "obj_id", TheObject.class);
             arp.addMapping("comment","com_id",Comment.class);
             arp.addMapping("message","pm_id", TheMessage.class);
+            arp.addMapping("university","uni_id", University.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>登录</title>
+    <title>游戏详情</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/MyCss.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
@@ -123,16 +123,11 @@
 </div>
 </body>
 <script>
-    $(document).ready(function (){
-        console.log(sessionStorage.getItem("obj_name"));
+    function refresh_com_list(){
         var data={
             obj_id:sessionStorage.getItem("obj_id")
-        }
-
-        $("#objectName").append(sessionStorage.getItem("obj_name"));
-        $("#objectImg").attr('src',sessionStorage.getItem("obj_img_href"));
-        $("#objectBuy").attr('href',sessionStorage.getItem("obj_href"));
-
+        };
+        $("#comment").text('');
         $.ajax({
             type:'POST',
             url:'/object/getObjectComments',
@@ -141,19 +136,30 @@
             success:function(data_return){
                 var commentsJson = eval(data_return);
                 var len = commentsJson.length;
-                for(var i=0;i<len;i++){
-                    var comment = $(
-                        "<div class=\"comment_details\">"+
-                        "<div style=\"float:left;\">"+
-                        "<span class=\"comment_name\">用户id:"+commentsJson[i]['com_creator_id']+" </span>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_create_time']+"</span></div>"+
-                        "<div class=\"del\">"+
-                        "</div> <div class=\"comment_content\" >"+commentsJson[i]['com_details']+"</div>"+
-                        "</div>");
-                    $("#comment").append(comment);
+                if(len===0){
+                    $("#comment").append('<p>发个友善的评论见证当下</p>');
+                }
+                else{
+                    for(var i=0;i<len;i++){
+                        var comment = $(
+                            "<div class=\"comment_details\">"+
+                            "<div style=\"float:left;\">"+
+                            "<span class=\"comment_name\">"+commentsJson[i]['u_nickname']+" </span>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_create_time']+"</span></div>"+
+                            "<div class=\"del\">"+
+                            "</div> <div class=\"comment_content\" >"+commentsJson[i]['com_details']+"</div>"+
+                            "</div>");
+                        $("#comment").append(comment);
+                    }
                 }
             }
-
         })
+    }
+    $(document).ready(function (){
+        console.log(sessionStorage.getItem("obj_name"));
+        $("#objectName").append(sessionStorage.getItem("obj_name"));
+        $("#objectImg").attr('src',sessionStorage.getItem("obj_img_href"));
+        $("#objectBuy").attr('href',sessionStorage.getItem("obj_href"));
+        refresh_com_list();
     })
 </script>
 <script>
@@ -167,7 +173,7 @@
         var data = {
             "u_id": u_id,
             "obj_id":sessionStorage.getItem("obj_id"),
-            "text":text,
+            "text":text
         };
         $.ajax({
             type: 'POST',
@@ -175,11 +181,12 @@
             data: JSON.stringify(data),
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) {
-
                 var code_return = data_return["code"];
-                if (code_return == 200) {
-                    $('#comment_textarea').clear();
+                if (code_return === 200) {
+                    $('#comment_textarea').val('');
                     console.log("add comment success");
+                    alert("提交成功");
+                    refresh_com_list();
                 } else {
                     alert("系统出错");
                 }

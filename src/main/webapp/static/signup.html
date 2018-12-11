@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>登录</title>
+    <title>注册</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/MyCss.css" rel="stylesheet">
     <script src="../js/jquery-3.3.1.js"></script>
@@ -58,10 +58,6 @@
 
                 <h4 style="color: purple;margin-top: 30px">学校</h4>
                 <select id="university" style="width: 250px;height: 40px;border: none">
-                    <option value="1">北京航空航天大学</option>
-                    <option value="2">不上学</option>
-                    <option value="3">退学</option>
-                    <option value="4">休学</option>
                 </select>
 
                 <button class="btn btn-default" type="submit" onclick="getSignupInput()"
@@ -77,6 +73,23 @@
 
 </body>
 <script>
+    $(document).ready(function () {
+        // 文档加载完毕，从数据库中读取需要的学校
+        $.ajax({
+            type: 'GET',
+            url: '/university/getUniversityList',
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                var commentsJson = eval(data_return);
+                var len = commentsJson.length;
+                for(var i=len-1; i>=0; i--){
+                    var university_info = $( '<option value="'+ commentsJson[i]['uni_id'] + '">'
+                        +commentsJson[i]['uni_name'] +'</option>' ) ;
+                    $('#university').append( university_info);
+                }
+            }
+        });
+    });
     //一个简单的检验例子，待完善，优先度低
     function getSignupInput() {
         var email = $("#email").val();
@@ -118,8 +131,7 @@
             "nickname": nickname,
             'password': pwd,
             'sex': sex,
-            'university':null
-            //还没确定学校编号先不管
+            'university':$('#university').val()
         };
         $.ajax({
             type: 'POST',
@@ -128,19 +140,20 @@
             contentType: 'application/json; charset=UTF-8',
             success: function (data_return) {
                 var code_return = data_return["code"];
-                if (code_return == 200) {
+                if (code_return === 200) {
                     var email_return = data_return["email"];
                     var nickname_return = data_return["nickname"];
                     var password_return = data_return["password"];
                     var school_id_return = data_return["school_id"];
-                    var u_id = data_return["u_id"]
-                    essionStorage.setItem("u_id", u_id);
+                    var u_id = data_return["u_id"];
+                    sessionStorage.setItem("u_id", u_id);
                     sessionStorage.setItem("email", email_return);
                     sessionStorage.setItem("nickname", nickname_return);
                     sessionStorage.setItem("password", password_return);
                     sessionStorage.setItem("school_id", school_id_return);
+                    alert("注册成功");
                     window.location.href = "index.html";
-                } else if (code_return == 400) {
+                } else if (code_return === 400) {
                     alert("系统出错，注册失败")
                 } else {
                     alert("系统出错");

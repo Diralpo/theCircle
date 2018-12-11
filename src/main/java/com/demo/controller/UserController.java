@@ -112,8 +112,8 @@ public class UserController extends Controller {
         Map map = new Gson().fromJson(s, Map.class);
         Record new_user  = new Record().set("u_nickname",map.get("nickname")).set(
                 "u_password",map.get("password")).set(
-                "u_sex",map.get("sex")).set("u_permission",1).set("u_status",1)
-                .set("u_email",map.get("email"));
+                "u_sex",map.get("sex")).set("u_permissions",1).set("u_status",1)
+                .set("u_email",map.get("email")).set("u_uni_id", map.get("university"));
         boolean success = Db.save("users","u_id",new_user);
         if(success==true){
             User user = User.dao.findFirst("select * from users where u_email="+"\""+map.get("email").toString()+"\"");
