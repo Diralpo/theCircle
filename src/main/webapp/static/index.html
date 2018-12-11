@@ -38,15 +38,15 @@
                 <div>
                     按类型浏览
                 </div>
-                <a href="/">
+                <a onclick="refresh_object_list()">
                     游戏
                 </a>
                 <br/>
-                <a href="/">
+                <a onclick="refresh_object_list()">
                     影音
                 </a>
                 <br/>
-                <a href="/">
+                <a onclick="refresh_object_list()">
                     体育
                 </a>
             </div>
@@ -55,8 +55,15 @@
                     最近查看
                 </div>
                 <div>
-                    <a href="/">
+                    <a onclick="refresh_object_list()">
                         RimWorld
+                    </a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a onclick="show_focus()">
+                        已关注
                     </a>
                 </div>
             </div>
@@ -98,8 +105,25 @@
         searchObject(theStr)
     }
 
-    $(document).ready(function () {
-        // 文档加载完毕，从数据库中读取需要的信息
+    function show_focus(){
+        $('#show_object').text('');
+        $.ajax({
+            type: 'GET',
+            url: '/object/showFocus',
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) { //成功的话，得到消息
+                var data = eval(data_return);
+                var len = data.length;
+                if (len > 0) {
+                    loadObject(data, len);
+                }
+            }
+        });
+        $("#search_str").blur(search);
+    }
+
+    function refresh_object_list(){
+        $('#show_object').text('');
         $.ajax({
             type: 'GET',
             url: '/object/seekObject',
@@ -113,6 +137,12 @@
             }
         });
         $("#search_str").blur(search);
+    }
+
+    $(document).ready(function () {
+        // 文档加载完毕，从数据库中读取需要的信息
+        refresh_object_list();
+
     });
 </script>
 </html>

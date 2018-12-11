@@ -24,6 +24,20 @@ public class ObjectsController extends Controller {
         renderJson(objects);
     }
 
+    public void showFocus(){
+        User current_user = getSessionAttr("current_user");
+        if(current_user==null){
+            renderJson("{\"code\":400}");
+            return;
+        }
+        List<Record> reslist = Db.find("select obj_id,obj_name,obj_href,obj_img_href,obj_type " +
+                "from object where exists(select * from users, user_object_relation where users.u_id = " +
+                "user_object_relation.uor_user_id and user_object_relation.uor_obj_id=object.obj_id and users.u_id="
+                +current_user.get("u_id")+
+                ")");
+        renderJson(reslist);
+    }
+
     public void search_by_likeName(){
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
@@ -114,6 +128,62 @@ public class ObjectsController extends Controller {
         else {
             renderJson("{\"code\":400}");
         }
+    }
+
+    public void addFocus(){
+        boolean success = false;
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        User current_user = getSessionAttr("current_user");
+        if(current_user==null){
+            renderJson("{\"code\":400}");
+            return;
+        }
+        Record new_uor = new Record().set("uor_obj_id", map.get("obj_id")).set("uor_user_id",
+                current_user.get("u_id"));
+        try {
+            success = Db.save("user_object_relation", "uor_obj_id",new_uor);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        if(success==true){
+            renderJson("{\"code\":200}");
+        }
+        else {
+            renderJson("{\"code\":400}");
+        }
+    }
+
+    public void query_has_focused(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        User current_user = getSessionAttr("current_user");
+        if(current_user==null){
+            renderJson("{\"code\":400}");
+            return;
+        }
+        List<Record> res = Db.find("select * from user_object_relation where uor_user_id =" +
+                current_user.get("u_id")+" and uor_obj_id="+map.get("obj_id"));
+        if(res.size() > 0){
+            renderJson("{\"code\":200,\"result\":1}");
+        }
+        else{
+            renderJson("{\"code\":200,\"result\":0}");
+        }
+    }
+
+    public void removeFocus(){
+        boolean success = false;
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        User current_user = getSessionAttr("current_user");
+        if(current_user==null){
+            renderJson("{\"code\":400}");
+            return;
+        }
+        Db.delete("delete from user_object_relation where uor_user_id =" +
+                current_user.get("u_id")+" and uor_obj_id="+map.get("obj_id"));
+        renderJson("{\"code\":200}");
     }
 
 

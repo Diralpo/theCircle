@@ -21,7 +21,7 @@ public class MessageController  extends Controller {
         User current_user = getSessionAttr("current_user");
         // 将用户对个人资料的修改放到后台验证
         if(current_user!=null){
-            System.out.println("信息: " + details + "\n发送给: "+receiver_nickname);
+            //System.out.println("信息: " + details + "\n发送给: "+receiver_nickname);
             String receiver_id = User.dao.findFirst("select * from users where u_nickname='"+receiver_nickname+"'").get("u_id").toString();
             if(!receiver_id.equals(current_user.get("u_id").toString())){
                 Record new_message = new Record().set("pm_details", details).set(

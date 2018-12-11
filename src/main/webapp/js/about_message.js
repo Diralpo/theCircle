@@ -2,6 +2,7 @@ function sent_message() {
     var detail = $('#insert_information_details').val();
     if(sessionStorage.getItem("u_id")===null){
         alert("请先登录");
+        window.location.href = "login.html";
     }
     else if(detail!==''){
         var data = {'details': detail, 'receiver': sessionStorage.getItem("recevier_nickname")};
@@ -93,6 +94,7 @@ function add_message_list(data){
 function refresh_message_list() {
     if(sessionStorage.getItem('u_id')===null){
         alert('请先登录');
+        window.location.href = "login.html";
         return;
     }
     $.ajax({
