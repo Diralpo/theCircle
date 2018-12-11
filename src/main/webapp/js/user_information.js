@@ -37,7 +37,7 @@ function get_user_info(){
             //$('#u_sex').attr('placeholder', user_data[0]["u_sex"]);
             $('#uni_name').attr('placeholder', user_data[0]["uni_name"]);
             $('#u_nickname').text(user_data[0]["u_nickname"]);
-
+            $('#user-avatar').attr('src', user_data[0]["u_photo"]);
 
             if (user_data[0].hasOwnProperty('u_email')) {
                 $('#privacyInfo').css('display', "block");
