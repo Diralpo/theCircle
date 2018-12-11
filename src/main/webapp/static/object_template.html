@@ -143,12 +143,14 @@
                     for(var i=0;i<len;i++){
                         var comment = $(
                             "<div class=\"comment_details\">"+
-                            "<div style=\"float:left;\">"+
-                            "<span class=\"comment_name\">"+commentsJson[i]['u_nickname']+" </span>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_create_time']+"</span></div>"+
+                            "<div style=\"float:left;\">"+"<a class='comment_nickname'>"+
+                            "<span class=\"comment_name\">"+commentsJson[i]['u_nickname']+"</span></a>  <span style=\"font-size: 14px\">"+commentsJson[i]['com_create_time']+"</span></div>"+
                             "<div class=\"del\">"+
                             "</div> <div class=\"comment_content\" >"+commentsJson[i]['com_details']+"</div>"+
                             "</div>");
-                        $("#comment").append(comment);
+                        $("#comment").append(comment).find(".comment_details").last().find(".comment_nickname").attr('onclick', "jump_to_user_index('" +
+                            commentsJson[i]['u_nickname'] + "')");
+
                     }
                 }
             }

@@ -68,14 +68,20 @@ public class ObjectsController extends Controller {
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
         Date date=new Date();
-        Record new_commnet = new Record().set("com_status",1).set("com_creator_id",map.get("u_id"))
-                .set("com_obj_id",map.get("obj_id")).set("com_details",map.get("text"));
-        boolean success = Db.save("comment","com_id",new_commnet);
+        User current_user = getSessionAttr("current_user");
+        if(current_user!=null && current_user.get("u_id")==map.get("u_id")) {
+            Record new_commnet = new Record().set("com_status", 1).set("com_creator_id", map.get("u_id"))
+                    .set("com_obj_id", map.get("obj_id")).set("com_details", map.get("text"));
+            boolean success = Db.save("comment", "com_id", new_commnet);
 
-        if(!success){
+            if (!success) {
+                renderJson("{\"code\":400}");
+            } else {
+                renderJson("{\"code\":200}");
+            }
+        }
+        else {
             renderJson("{\"code\":400}");
-        }else {
-            renderJson("{\"code\":200}");
         }
     }
 

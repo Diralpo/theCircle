@@ -44,12 +44,12 @@ function get_user_info(){
                 $('#u_email').attr('placeholder', user_data[0]["u_email"]);
                 $('#u_create_time').attr('placeholder', user_data[0]["u_create_time"]);
                 $('#u_permissions').attr('placeholder', user_data[0]["u_permissions"]);
-                $('#send_message_button').css('display', "none");
+                $('#send_message_button').attr("data-nickname", "").css('display', "none");
             }
             else{
                 $('#u_sex').find('a').attr('onclick', '');
                 $('#privacyInfo').css('display', "none");
-                $('#send_message_button').css('display', "block");
+                $('#send_message_button').attr("data-nickname", user_data[0]["u_nickname"]).css('display', "block");
             }
             //window.location.href = "user.html";
         }
