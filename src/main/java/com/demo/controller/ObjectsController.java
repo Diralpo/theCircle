@@ -75,7 +75,6 @@ public class ObjectsController extends Controller {
         if(!success){
             renderJson("{\"code\":400}");
         }else {
-
             renderJson("{\"code\":200}");
         }
     }
@@ -83,8 +82,11 @@ public class ObjectsController extends Controller {
     public void getObjectComments(){
         String s=HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s,Map.class);
-        List<Comment> comments= Comment.dao.find("select * from comment where com_obj_id="+map.get("obj_id"));
-        renderJson(comments);
+        //List<Comment> comments= Comment.dao.find("select * from comment where com_obj_id="+map.get("obj_id"));
+        List<Record> comments_info = Db.find("select com_create_time, com_last_modify_time, com_obj_id, " +
+                "com_href, com_details, u_nickname from comment, users where comment.com_creator_id=users.u_id " +
+                "and com_obj_id="+map.get("obj_id"));
+        renderJson(comments_info);
     }
 
     public void createObject(){
