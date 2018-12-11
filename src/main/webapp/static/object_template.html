@@ -19,6 +19,12 @@
             max-width: 100%;
             max-height: 100%;
         }
+        .list-group-item{
+            border:none;
+        }
+        .list-group-item:hover{
+            border-left: 2px solid purple;
+        }
     </style>
 </head>
 <body>
@@ -29,7 +35,27 @@
 <div class="container-fluid" style="margin-top: 50px">
     <div class="row">
 
-        <div class="col-md-3" style="text-align: center"></div>
+        <div class="col-md-3" style="text-align: center">
+            <h4 id = "group_title"></h4>
+            <div class="list-group" id = "group_list" style="width: 70%;margin-left: 50px">
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="根据学校搜索">
+                    <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">搜索</button>
+                        </span>
+                </div>
+
+                <a href="#" class="list-group-item">
+                    Cras justo odio
+                </a>
+                <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+                <a href="#" class="list-group-item">Morbi leo risus</a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+        </div>
+
         <div class="col-md-5 normal-font">
             <div id="content" style="margin-top: 30px">
                 <h1 id="objectName"></h1>
@@ -154,12 +180,38 @@
             }
         })
     }
+    function refresh_group_list(){
+        var data={
+            obj_id:sessionStorage.getItem("obj_id")
+        };
+        $.ajax({
+            type:'POST',
+            url:'/object/getGroupList',
+            data:JSON.stringify(data),
+            contentType:'application/json; charset=UTF-8',
+            success:function(data_return){
+                var groupJson = eval(data_return);
+                var len = groupJson.length;
+                if(len==0){
+                    $("#group_list").append($("<p style=\"margin-top: 10px\">暂时没有小组</p>"));
+                }else{
+                    for(var i=0;i<len;i++){
+                        var content = $(
+                            "<a href=\"#\" class=\"list-group-item\">Dapibus ac facilisis in</a>"
+                        )
+                    }
+                }
+            }
+        })
+    }
     $(document).ready(function (){
         console.log(sessionStorage.getItem("obj_name"));
         $("#objectName").append(sessionStorage.getItem("obj_name"));
         $("#objectImg").attr('src',sessionStorage.getItem("obj_img_href"));
         $("#objectBuy").attr('href',sessionStorage.getItem("obj_href"));
+        $("#group_title").append("发现"+sessionStorage.getItem('obj_name')+"小组");
         refresh_com_list();
+        refresh_group_list();
     })
 </script>
 <script>
