@@ -84,13 +84,13 @@
                         </div>
                     </div>
                     <div id="info" style="margin-left:10px;float: right">
-                        <span>发行公司：</span>我发行的
+                        <span id ="object_distribution_company" >发行公司：</span>
                         <br>
-                        <span>发行时间：</span>8102.0.1
+                        <span id = "object_distribution_time">发行时间：</span>
                         <br>
-                        <span>其他信息：</span>充数的
+                        <span><a  id = "object_href" href="#">官网链接</a></span>
                         <br>
-                        <span id="objectBuy" href="%">进入购买页面</span>
+                        <span ><a id="object_get_href" href="#">进入购买页面</a></span>
                         <br>
                     </div>
                 </div>
@@ -111,8 +111,7 @@
             <div style="margin-top: 350px" id="brief-introduction">
                 <h2>简介</h2>
                 <div style=" margin-top:10px; border-top: solid purple 1px">
-                    <p class="normal-font">
-                        这里是简介balabala
+                    <p class="normal-font" id ="object_introduction">
                     </p>
                 </div>
 
@@ -249,10 +248,12 @@
         console.log(sessionStorage.getItem("obj_name"));
         $("#objectName").append(sessionStorage.getItem("obj_name"));
         $("#objectImg").attr('src',sessionStorage.getItem("obj_img_href"));
-        $("#objectBuy").attr('href',sessionStorage.getItem("obj_href"));
+        $("#object_href").attr('href',sessionStorage.getItem("obj_href"));
         $("#group_title").append("发现"+sessionStorage.getItem('obj_name')+"小组");
-
-
+        $("#object_distribution_company").after(sessionStorage.getItem("obj_distribution_company"));
+        $("#object_distribution_time").after(sessionStorage.getItem("obj_distribution_time"));
+        $("#object_get_href").attr('href',sessionStorage.getItem("obj_get_href"));
+        $("#object_introduction").append(sessionStorage.getItem("obj_details"))
         var obj_id = sessionStorage.getItem("obj_id");
         $.ajax({
             type: 'POST',

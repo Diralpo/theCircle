@@ -65,14 +65,12 @@ public class ObjectsController extends Controller {
         String id = map.get("object_id").toString();
         if(current_user!=null && (int)current_user.get("u_permissions")>255 &&
                 map.get("email").toString().equals(current_user.get("u_email"))){
-            List<TheObject> objects = TheObject.dao.find("select obj_id,obj_name,obj_href,obj_img_href," +
-                    "obj_type, obj_status from object where obj_id =" + id+
+            List<TheObject> objects = TheObject.dao.find("select * from object where obj_id =" + id+
                     " order by obj_last_modify_time");
             renderJson(objects);
         }
         else{
-            List<TheObject> objects = TheObject.dao.find("select obj_id,obj_name,obj_href,obj_img_href, " +
-                    "obj_type from object where obj_status=1 and obj_id =" + id +
+            List<TheObject> objects = TheObject.dao.find("select * from object where obj_status=1 and obj_id =" + id +
                     " order by obj_last_modify_time");
             renderJson(objects);
         }

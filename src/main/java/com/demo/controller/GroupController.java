@@ -69,4 +69,23 @@ public class GroupController extends Controller {
         }
 
     }
+
+    public void get_group_info(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        String gro_id = map.get("gro_id").toString();
+        Record group_info;
+        int user_num;
+        try{
+            group_info = Db.findFirst("select * from thegroup,university,object,users where " +
+                    "thegroup.gro_id="+gro_id+" and thegroup.gro_uni_id = university.uni_id and thegroup.gro_obj_id = object.obj_id and " +
+                    "thegroup.gro_manager_id = users.u_id");
+            user_num = Db.queryInt("select count(*) from user_group_relation where ugr_gro_id="+gro_id);
+            group_info.set("gro_user_num",user_num);
+            renderJson(group_info);
+        }catch (Exception e){
+            System.out.println("Exception: GroupController.getGroupList ");
+            System.out.println(e);
+        }
+    }
 }

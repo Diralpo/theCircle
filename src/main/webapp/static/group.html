@@ -36,7 +36,7 @@
                     <div class="aw-mod aw-topic-detail-title">
                         <div class="mod-body">
                             <img class = "img-responsive" style="zoom: 7%;float:left" src="../image/object_img/RimWorld.jpg" alt="object"/>
-                            <h2 class="pull-left">object_name_university </h2>
+                            <h2 class="pull-left" id="group_show_name"></h2>
                             <div class="aw-topic-operate text-color-999">
                             </div>
                         </div>
@@ -59,8 +59,6 @@
                             <!-- tab 切换内容 -->
                             <div class="tab-content">
                                 <div class="tab-pane active" id="all">
-                                    <!-- 推荐问题 -->
-                                    <!-- end 推荐问题 -->
                                     <div class="aw-mod">
                                         <div class="mod-body">
                                             <div class="aw-common-list" id="c_all_list">
@@ -99,6 +97,7 @@
                     <div class="aw-mod aw-text-align-justify">
                         <div class="mod-head">
                             <h3>object描述</h3>
+                            <p id="group_show_object_details"></p>
                         </div>
                         <div class="mod-body">
                         </div>
@@ -113,14 +112,12 @@
                         <div class="mod-body">
                             <dl>
                                 <dt class="pull-left aw-border-radius-5">
-                                    <a href="http://wenda.ghostchina.com/people/error"><img
-                                            src="http://wenda.ghostchina.com/uploads/avatar/000/00/03/86_avatar_mid.jpg"
-                                            alt=""/></a>
+                                    <img id ="manager_head" src="/" alt=""/>
                                 </dt>
 
                                 <dd class="pull-left">
-                                    <a class="aw-user-name" href="http://wenda.ghostchina.com/people/error"
-                                       data-id="386">mbra </a>
+                                    <a class="aw-user-name" href="#"
+                                       id="manager_name"></a>
                                     <p>获得 <b>3</b> 次赞同, <b>1000000</b> 次感谢</p>
                                 </dd>
                             </dl>
@@ -131,7 +128,7 @@
                     <!-- xx人关注该话题 -->
                     <div class="aw-mod topic-status">
                         <div class="mod-head">
-                            <h3>2 人参与了该小组</h3>
+                            <h3 id="user_num"></h3>
                         </div>
                         <div class="mod-body">
                             <div id="focus_users" class="aw-border-radius-5"></div>
@@ -150,4 +147,31 @@
 </div>
 
 </body>
+<script>
+    function search_group_info(group_info){
+        var gro_id = group_info["gro_id"];
+        var data = {
+            "gro_id":gro_id
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/group/get_group_info',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                var return_info = eval(data_return);
+                console.log(return_info);
+                $("#group_show_name").append(return_info["gro_name"]+"("+return_info["obj_name"]+"-"+return_info["uni_name"]+")");
+                $("#group_show_object_details").append(return_info["obj_details"]);
+                $("#manager_head").attr("src",return_info["u_photo"]);
+                $("#manager_name").append(return_info["u_nickname"]);
+                $("#user_num").append(return_info["gro_user_num"]+" 参与了该项目");
+            }
+        });
+    }
+    $(document).ready(function () {
+        var group_info = get_query_object(window.location.href);
+        search_group_info(group_info);
+    })
+</script>
 </html>

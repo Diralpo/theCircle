@@ -152,7 +152,10 @@ function jump_to_object(id) {
             sessionStorage.setItem("obj_img_href", object_data[0]["obj_img_href"]);
             sessionStorage.setItem("obj_type", object_data[0]["obj_type"]);
             sessionStorage.setItem("obj_status", object_data[0]["obj_status"]);
-
+            sessionStorage.setItem("obj_details", object_data[0]["obj_details"]);
+            sessionStorage.setItem("obj_get_href", object_data[0]["obj_get_href"]);
+            sessionStorage.setItem("obj_distribution_company", object_data[0]["obj_distribution_company"]);
+            sessionStorage.setItem("obj_distribution_time", object_data[0]["obj_distribution_time"]);
             window.location.href = "object_template.html";
         }
     });
