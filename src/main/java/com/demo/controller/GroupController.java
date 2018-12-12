@@ -1,12 +1,16 @@
 package com.demo.controller;
 
 import com.demo.model.Group;
+import com.demo.model.TheObject;
+import com.demo.model.University;
+import com.demo.model.User;
 import com.google.gson.Gson;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 
@@ -41,5 +45,28 @@ public class GroupController extends Controller {
             System.out.println("Exception: GroupController.getGroupList ");
             System.out.println(e);
         }
+    }
+
+    public void create_group(){
+        String s =HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        User current_user = getSessionAttr("current_user");
+
+        if(current_user!=null && current_user.get("u_id").toString().equals(map.get("u_id"))){
+            try {
+                University university = University.dao.findFirst("select * from university where uni_name= \"" + map.get("gro_uni_name").toString()+"\"");
+                TheObject theObject = TheObject.dao.findFirst("select * from object where obj_name=\"" + map.get("gro_obj_name").toString()+"\"");
+                Record new_group = new Record().set("gro_name", map.get("gro_name").toString()).set("gro_status", 0)
+                        .set("gro_manager_id", map.get("gro_manager_id")).set("gro_uni_id", university.get("uni_id")).set("gro_obj_id", theObject.get("obj_id"))
+                        .set("gro_details",map.get("gro_detail").toString());
+                Db.save("thegroup", "gro_id", new_group);
+                renderJson("{\"code\":200}");
+            }catch (Exception e){
+                renderJson("{\"code\":400}");
+            }
+        }else{
+            renderJson("{\"code\":404}");
+        }
+
     }
 }
