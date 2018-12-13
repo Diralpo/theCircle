@@ -152,5 +152,21 @@ public class GroupController extends Controller {
             System.out.println(e);
             renderJson("{\"code\":400}");
         }
+
+    }
+
+    public void get_group_users(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        String gro_id = map.get("gro_id").toString();
+        List<Record> user_list_info;
+        try{
+            user_list_info = Db.find("select u_id,u_nickname,u_photo from users,user_group_relation where " +
+                    "ugr_gro_id ="+gro_id+" and ugr_user_id=u_id");
+            renderJson(user_list_info);
+        }catch (Exception e){
+            System.out.println("Exception: GroupController.get_group_users ");
+            System.out.println(e);
+        }
     }
 }
