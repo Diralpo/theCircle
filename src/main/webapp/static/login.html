@@ -79,7 +79,11 @@
                     var warning = $("<p></p>").text("账号或密码错误").css("color", "purple");
                     $("#login-prompt").html(warning)
                 } else if (code_return == 401) {
-
+                    sessionStorage.setItem("u_id",data_return["u_id"]);
+                    sessionStorage.setItem("email", email_return);
+                    sessionStorage.setItem("nickname", nickname_return);
+                    sessionStorage.setItem("password", password_return);
+                    sessionStorage.setItem("school_id", school_id_return);
                     window.location.href = "index.html";
                 }
                 else {

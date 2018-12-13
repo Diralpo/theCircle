@@ -119,3 +119,29 @@ function remove_group_focus() {
     });
 
 }
+
+function refresh_announce_list() {
+    var gro_id = get_query_object(window.location.href)["gro_id"];
+    var data={
+        "gro_id":gro_id
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/announcement/get_announce_list',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data_return) {
+            var datares = eval(data_return);
+            for(var i=0;i<datares.length;i++){
+                var content = $(" <div class=\"aw-item \"> <div class=\"aw-question-content\"> <h4>"+
+                    "<a href=\"javascript:void(0)\" onclick=\"showContent("+datares[i]["ann_id"]+")\">"+datares[i]["ann_title"]+"</a> </h4> <p>"+
+                    "<a class=\"aw-user-name\" >"+datares[i]["u_nickname"]+"</a>"+
+                    "<span class=\"text-color-999\">发布了该公告 •"+datares[i]["ann_create_time"]+"</span> </p> </div> </div>"
+                );
+                console.log(content);
+                $("#c_all_list").append(content);
+            }
+        }
+    });
+
+}
