@@ -1,6 +1,7 @@
 function save_user_info_change(){
     var data = {'u_sex': $('#show_u_sex').text(),
-    'u_nickname': $('#u_nickname').text()
+        'u_nickname': $('#u_nickname').text(),
+        'u_photo': $('#u_photo_url').val()
     };
 
     $.ajax({
@@ -31,10 +32,8 @@ function get_user_info(){
         contentType: 'application/json; charset=UTF-8',
         success: function (data_return) { //成功的话，得到消息
             var user_data = eval(data_return);
-            //$('#u_photo').text(user_data[0]["u_photo"]);
 
             $('#show_u_sex').text(user_data[0]["u_sex"]);
-            //$('#u_sex').attr('placeholder', user_data[0]["u_sex"]);
             $('#uni_name').attr('placeholder', user_data[0]["uni_name"]);
             $('#u_nickname').text(user_data[0]["u_nickname"]);
             $('#user-avatar').attr('src', user_data[0]["u_photo"]);
@@ -45,11 +44,13 @@ function get_user_info(){
                 $('#u_create_time').attr('placeholder', user_data[0]["u_create_time"]);
                 $('#u_permissions').attr('placeholder', user_data[0]["u_permissions"]);
                 $('#send_message_button').attr("data-nickname", "").css('display', "none");
+                $('#u_photo_url').val(user_data[0]["u_photo"]).css('display', "block");
             }
             else{
                 $('#u_sex').find('a').attr('onclick', '');
                 $('#privacyInfo').css('display', "none");
                 $('#send_message_button').attr("data-nickname", user_data[0]["u_nickname"]).css('display', "block");
+                $('#u_photo_url').css('display', 'none');
             }
             //window.location.href = "user.html";
         }
