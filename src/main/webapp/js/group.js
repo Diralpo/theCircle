@@ -62,3 +62,60 @@ function create_group() {
         }
     });
 }
+
+function add_group_focus(){
+    var gro_id = get_query_object(window.location.href)["gro_id"];
+    var u_id = sessionStorage.getItem("u_id");
+    if(u_id==null){
+        alert("请先登录");
+        return;
+    }
+    var data={
+      "gro_id":gro_id,
+      "u_id":u_id
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/group/add_group_focus',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data_return) {
+            var datares = eval(data_return);
+            if(datares['code']===400){
+                alert("系统出错");
+            }
+            else
+                $('#add-group-focus').attr('onclick', 'remove_group_focus()').text('退出小组').attr("class", "btn btn-warning");
+
+        }
+    });
+
+}
+
+function remove_group_focus(){
+    var gro_id = get_query_object(window.location.href)["gro_id"];
+    var u_id = sessionStorage.getItem("u_id");
+    if(u_id==null){
+        alert("请先登录");
+        return;
+    }
+    var data={
+        "gro_id":gro_id,
+        "u_id":u_id
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/group/remove_group_focus',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=UTF-8',
+        success: function (data_return) {
+            var datares = eval(data_return);
+            if(datares['code']===400){
+                alert("系统出错");
+            }
+            else if(datares['code']===200)
+                $('#add-group-focus').attr('onclick', 'add_group_focus()').text('+加入小组').attr("class", "btn btn-primary");
+        }
+    });
+
+}

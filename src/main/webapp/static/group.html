@@ -16,6 +16,7 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/star-rating.min.js"></script>
     <script src="../js/loadWeb.js"></script>
+    <script src="../js/group.js"></script>
     <style>
         .img-display {
             max-width: 100%;
@@ -35,13 +36,14 @@
                 <div class="col-sm-12 col-md-9 aw-main-content">
                     <div class="aw-mod aw-topic-detail-title">
                         <div class="mod-body">
-                            <img class = "img-responsive" id="obj_img" style="zoom: 7%;float:left" src="" alt="object"/>
                             <h2 class="pull-left" id="group_show_name"></h2>
+
                             <div class="aw-topic-operate text-color-999">
                             </div>
                         </div>
-                    </div>
 
+                    </div>
+                    <button class="btn btn-primary" id="add-group-focus" style="margin-left: 30px" onclick="add_group_focus()">+加入</button>
                     <div class="aw-mod aw-topic-list-mod">
                         <div class="mod-head">
                             <div class="tabbable">
@@ -148,6 +150,27 @@
 
 </body>
 <script>
+    function if_in_group() {
+        if(sessionStorage.getItem("u_id")==null){
+            return;
+        }
+        var data={
+            "u_id":sessionStorage.getItem("u_id"),
+            "gro_id":get_query_object(window.location.href)["gro_id"]
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/group/if_in_group',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                var datares = eval(data_return);
+                if(datares['code']===200){
+                    $('#add-group-focus').attr('onclick', 'remove_group_focus()').text('退出小组').attr("class", "btn btn-warning");
+                }
+            }
+        });
+    }
     function search_group_info(group_info){
         var gro_id = group_info["gro_id"];
         var data = {
@@ -166,13 +189,16 @@
                 $("#manager_head").attr("src",return_info["u_photo"]);
                 $("#manager_name").append(return_info["u_nickname"]);
                 $("#user_num").append(return_info["gro_user_num"]+" 参与了该项目");
-                $("#obj_img").attr("src",return_info['obj_img_href']);
             }
         });
     }
     $(document).ready(function () {
         var group_info = get_query_object(window.location.href);
         search_group_info(group_info);
+        if_in_group();
     })
+</script>
+<script>
+
 </script>
 </html>

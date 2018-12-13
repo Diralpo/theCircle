@@ -59,7 +59,12 @@ public class GroupController extends Controller {
                 Record new_group = new Record().set("gro_name", map.get("gro_name").toString()).set("gro_status", 0)
                         .set("gro_manager_id", map.get("gro_manager_id")).set("gro_uni_id", university.get("uni_id")).set("gro_obj_id", theObject.get("obj_id"))
                         .set("gro_details",map.get("gro_detail").toString());
+
                 Db.save("thegroup", "gro_id", new_group);
+                Group last_create_group = Group.dao.findFirst("select * from thegroup where gro_name=\""+map.get("gro_name").toString()+"\"");
+                Record new_ugr = new Record().set("ugr_user_id",map.get("gro_manager_id")).set("ugr_gro_id",last_create_group.get("gro_id")).set("ugr_permissions",0)
+                        .set("ugr_status",1);
+                Db.save("user_group_relation",new_ugr);
                 renderJson("{\"code\":200}");
             }catch (Exception e){
                 renderJson("{\"code\":400}");
@@ -86,6 +91,66 @@ public class GroupController extends Controller {
         }catch (Exception e){
             System.out.println("Exception: GroupController.getGroupList ");
             System.out.println(e);
+        }
+    }
+
+    public void add_group_focus(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        User current_user = getSessionAttr("current_user");
+        if(current_user==null||!current_user.get("u_id").toString().equals(map.get("u_id").toString())){
+            renderJson("{\"code\":400}");
+            return;
+        }
+        try {
+            Record new_ugr = new Record().set("ugr_user_id", map.get("u_id").toString())
+                    .set("ugr_gro_id", map.get("gro_id")).set("ugr_permissions", 1).set("ugr_status", 1);
+            Db.save("user_group_relation", new_ugr);
+            renderJson("{\"code\":200}");
+        }catch (Exception e){
+            System.out.println(e);
+            renderJson("{\"code\":400}");
+        }
+    }
+
+    public void remove_group_focus(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        User current_user = getSessionAttr("current_user");
+        if(current_user==null||!current_user.get("u_id").toString().equals(map.get("u_id").toString())){
+            renderJson("{\"code\":400}");
+            return;
+        }
+        try {
+            Db.delete("delete from user_group_relation where ugr_user_id =" +
+                    map.get("u_id").toString() + " and ugr_gro_id=" + map.get("gro_id").toString());
+            renderJson("{\"code\":200}");
+        }catch (Exception e){
+            System.out.println(e);
+            renderJson("{\"code\":400}");
+        }
+    }
+
+    public void if_in_group(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        User current_user = getSessionAttr("current_user");
+        if(current_user==null||!current_user.get("u_id").toString().equals(map.get("u_id").toString())){
+            renderJson("{\"code\":400}");
+            return;
+        }
+        try {
+            int num;
+            num = Db.queryInt("select count(*) from user_group_relation where ugr_gro_id="+map.get("gro_id").toString()+" and ugr_user_id="+map.get("u_id").toString());
+            if(num!=0){
+                renderJson("{\"code\":200}");
+            }
+            else{
+                renderJson("{\"code\":400}");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            renderJson("{\"code\":400}");
         }
     }
 }

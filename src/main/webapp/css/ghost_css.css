@@ -2762,7 +2762,7 @@ a.aw-load-more-content {
 
 .aw-topic-detail-title .mod-body {
     position: relative;
-    padding: 0 0 0 80px
+    padding: 0 0 0 10px
 }
 
 .aw-topic-detail-title .mod-body img {
@@ -2808,7 +2808,7 @@ a.aw-load-more-content {
 }
 
 .aw-topic-list-mod .tab-pane .aw-mod > .mod-body {
-    padding: 0 20px
+    padding: 0 0px
 }
 
 .aw-topic-detail-about {
@@ -4269,7 +4269,7 @@ a.aw-load-more-content {
     }
 
     .aw-nav-tabs {
-        padding: 30px 10px 0
+        padding: 20px 10px 0
     }
 
     .aw-nav-tabs > li {
