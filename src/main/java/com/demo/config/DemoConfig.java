@@ -30,7 +30,7 @@ public class DemoConfig extends JFinalConfig {
         me.add("/message", MessageController.class);
         me.add("/university", UniversityController.class);
         me.add("/group",GroupController.class);
-        me.add("/announcement",AnnouncementController.class);
+        me.add("/announcement", AnnounceController.class);
     }
 
     @Override
