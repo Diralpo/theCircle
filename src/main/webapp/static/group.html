@@ -31,9 +31,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+                <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
-            <div class="modal-body">在这里添加一些文本</div>
+            <div class="modal-body" id="myModalBody"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
@@ -78,19 +78,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="all">
                                             <div class="aw-common-list" id="c_all_list">
-                                                <div class="aw-item ">
-                                                    <div class="aw-question-content">
-                                                        <h4>
-                                                            <a href="javascript:void(0)" onclick="showContent()">该小组解散了</a>
-                                                        </h4>
-                                                        <p>
-                                                            <a
-                                                               class="aw-user-name" ></a>
-                                                            <span class="text-color-999">发布了该公告 • 2017-06-10 08:48	</span>
-                                                        </p>
-                                                    </div>
 
-                                                </div>
                                             </div>
                                 </div>
                                 <div class="tab-pane" id="about">
@@ -205,11 +193,27 @@
         var group_info = get_query_object(window.location.href);
         search_group_info(group_info);
         if_in_group();
+        refresh_announce_list();
     })
 </script>
 <script>
-    function showContent() {
-        console.log(123445);
+    function showContent(ann_id) {
+        var data={
+          "ann_id":ann_id
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/announcement/search_announce',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {
+                var datares = eval(data_return);
+                $("#myModalLabel").empty();
+                $("#myModalLabel").append(datares["ann_title"]);
+                $("#myModalBody").empty();
+                $("#myModalBody").append(datares["ann_details"]);
+            }
+        });
         $('#myModal').modal('show')
     }
 </script>
