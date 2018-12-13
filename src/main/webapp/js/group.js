@@ -38,7 +38,7 @@ function create_group() {
     var gro_obj_name = $("#group_object_name").val();
     var gro_manager_id = u_id;
     var gro_uni_name = $("#group_uni_name").val();
-    var gro_name = $("#group_name");
+    var gro_name = $("#group_name").val();
     var data = {
         "u_id": u_id,
         "gro_manager_id": gro_manager_id,
