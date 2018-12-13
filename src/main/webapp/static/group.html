@@ -65,9 +65,9 @@
                             <div class="tabbable">
                                 <!-- tab 切换 -->
                                 <ul class="nav nav-tabs aw-nav-tabs hidden-xs">
-                                    <li class="active"><a href="#all" data-toggle="tab">公告</a></li>
-                                    <li><a href="#best_answers" data-toggle="tab">小组介绍</a></li>
-                                    <li><a href="#about" id="i_about" data-toggle="tab">小组成员</a></li>
+                                    <li class="active"><a href="#announcement" data-toggle="tab">公告</a></li>
+                                    <li><a href="#group_introduction" data-toggle="tab">小组介绍</a></li>
+                                    <li><a href="#group_users" data-toggle="tab">小组成员</a></li>
                                 </ul>
                                 <!-- end tab 切换 -->
                             </div>
@@ -76,12 +76,16 @@
                         <div class="mod-body">
                             <!-- tab 切换内容 -->
                             <div class="tab-content">
-                                <div class="tab-pane active" id="all">
+                                <div class="tab-pane active" id="announcement">
                                             <div class="aw-common-list" id="c_all_list">
 
                                             </div>
                                 </div>
-                                <div class="tab-pane" id="about">
+                                <div class="tab-pane" id="group_introduction">
+                                    <p id="intro_content " class="normal-font" style="margin-left: 30px;margin-top: 30px">
+                                    </p>
+                                </div>
+                                <div class="tab-pane" id="group_users">
                                     <div class="aw-topic-detail-about text-color-666 markitup-box">
                                     </div>
                                 </div>
@@ -147,6 +151,9 @@
 
 </body>
 <script>
+    function get_user_list() {
+
+    }
     function if_in_group() {
         if(sessionStorage.getItem("u_id")==null){
             return;
@@ -185,7 +192,9 @@
                 $("#group_show_object_details").append(return_info["obj_details"]);
                 $("#manager_head").attr("src",return_info["u_photo"]);
                 $("#manager_name").append(return_info["u_nickname"]);
+                $("#manager_name").attr("href","user.html?"+param({"u_id":return_info["u_id"]}))
                 $("#user_num").append(return_info["gro_user_num"]+" 参与了该项目");
+                $("#intro_content ").append(return_info["gro_details"]);
             }
         });
     }
@@ -194,6 +203,7 @@
         search_group_info(group_info);
         if_in_group();
         refresh_announce_list();
+        get_user_list();
     })
 </script>
 <script>
