@@ -13,6 +13,22 @@ import java.util.List;
 import java.util.Map;
 
 public class AnnounceController extends Controller {
+    public void search_announce(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s, Map.class);
+        String ann_id = map.get("ann_id").toString();
+
+        Record announce_info;
+
+        try{
+            announce_info = Db.findFirst("select * from announcement where ann_id="+ann_id);
+            renderJson(announce_info);
+        }catch (Exception e){
+            System.out.println("Exception: AnnouncementController.search_announce ");
+            System.out.println(e);
+        }
+    }
+    
     public void createAnnouncement() {
         String s = HttpKit.readData(getRequest());
         Map map = new Gson().fromJson(s, Map.class);
