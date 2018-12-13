@@ -70,7 +70,8 @@ public class UserController extends Controller {
 
         // 将用户对个人资料的修改放到后台验证
         if(current_user!=null && nickname.equals(current_user.get("u_nickname"))){
-            Db.update("update users set u_sex = '" +
+            Db.update("update users set u_photo='" + map.get("u_photo")+
+                    "' ,u_sex = '" +
                     map.get("u_sex").toString()+
                     "' where u_nickname='" + nickname+
                     "'");
