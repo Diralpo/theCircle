@@ -105,7 +105,7 @@ function refresh_message_list() {
             var messages = eval(data_return);
             var len = messages.length;
             if(len===0){
-                $('#show_message').append('<p>这还什么都没有</p>');
+                $('#show_message').append('<p>这还什么都没有，去和别人打个招呼吧</p>');
             }
             else{
                 for(var i=0;i<len;i++){
