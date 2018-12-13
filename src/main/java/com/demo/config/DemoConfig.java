@@ -30,6 +30,7 @@ public class DemoConfig extends JFinalConfig {
         me.add("/message", MessageController.class);
         me.add("/university", UniversityController.class);
         me.add("/group",GroupController.class);
+        me.add("/announcement", AnnounceController.class);
     }
 
     @Override
@@ -57,6 +58,7 @@ public class DemoConfig extends JFinalConfig {
             arp.addMapping("university","uni_id", University.class);
             arp.addMapping("thegroup","gro_id",Group.class);
             arp.addMapping("user_group_relation","ugr_user_id",User_group.class);
+            arp.addMapping("announcement","ann_id",Announcement.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

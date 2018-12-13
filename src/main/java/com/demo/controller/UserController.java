@@ -117,7 +117,7 @@ public class UserController extends Controller {
                 .set("u_email",map.get("email")).set("u_uni_id", map.get("university")).set("u_photo",
                         map.get("u_photo"));
         boolean success = Db.save("users","u_id",new_user);
-        if(success==true){
+        if(success){
             User user = User.dao.findFirst("select * from users where u_email="+"\""+map.get("email").toString()+"\"");
             setSessionAttr("current_user",user);
             renderJson(new JsonResult(200,user.get("u_id"),user.get("u_email"),user.get("u_password"),user.get("u_nickname"),user.get("u_uni_id")));
@@ -125,8 +125,6 @@ public class UserController extends Controller {
         else {
             renderJson("{\"code\":400}");
         }
-        return;
-
     }
 
 
