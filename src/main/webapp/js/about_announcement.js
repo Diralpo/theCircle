@@ -64,6 +64,7 @@ function get_announcement() {
                 return;
             }
             data_return = eval(data_return);
+            $('.aw-common-list').text('');
             var len = data_return.length;
             if (len > 0) {
                 for (var i = 0; i < len; i++) {
