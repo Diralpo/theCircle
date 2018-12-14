@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/MyCss.css" rel="stylesheet">
+
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/loadWeb.js"></script>
+</head>
+<body>
+<nav style="font-size:20px;text-align: center; top: 0;" id="global_header"></nav>
+<script>
+    $("#global_header").load("../static/global_header.html")
+</script>
+
+<div class="container" style="margin-top: 50px">
+    <p style="color: purple;font-size: 40px;margin-top: 50px">我的小组</p>
+    <div class="row" id ="group_list_content">
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        var u_id = get_query_object(window.location.href)["u_id"];
+
+        var data={
+            "u_id":u_id
+        };
+        console.log(1222);
+        $.ajax({
+            type: 'POST',
+            url: '/group/get_user_group_list',
+            data: JSON.stringify(data),  //转化字符串
+            contentType: 'application/json; charset=UTF-8',
+            success: function (data_return) {//成功的话，得到消息
+                var datares = eval(data_return);
+                for (var i = 0; i < datares.length; i++) {
+                    var content = $(
+                        "<div class='col-lg-4'>" +
+                        "<dl style='margin-top: 30px'> <dt class=\" aw-border-radius-5\" style='margin-left: 30px'>" +
+                        "<img class=\"img-responsive\" style=\"width: 100px;height: 100px\" src=\"" + datares[i]["obj_img_href"] + "\" alt=\"\"/> </dt>" +
+                        "<dd>" +
+                        "<a class=\"aw-user-name normal-font\" href=\"group.html?" + param({"gro_id": datares[i]["gro_id"]})+"\"" + " >" + datares[i]["gro_name"] + "(" + datares[i]["obj_name"] + ")" + "</a> </dd> </dl> </div>"
+                    );
+                    $("#group_list_content").append(content);
+                }
+
+            }
+        })
+
+    });
+</script>
+</html>

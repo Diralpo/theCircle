@@ -169,4 +169,19 @@ public class GroupController extends Controller {
             System.out.println(e);
         }
     }
+
+    public void get_user_group_list(){
+        String s = HttpKit.readData(getRequest());
+        Map map = new Gson().fromJson(s,Map.class);
+        String u_id = map.get("u_id").toString();
+        List<Record> gro_list_info;
+        try{
+            gro_list_info = Db.find("select obj_img_href,gro_id,gro_name,obj_name from user_group_relation,thegroup,object where " +
+                    "ugr_user_id ="+u_id+" and ugr_gro_id=gro_id and gro_obj_id=obj_id");
+            renderJson(gro_list_info);
+        }catch (Exception e){
+            System.out.println("Exception: GroupController.get_user_group_list ");
+            System.out.println(e);
+        }
+    }
 }
