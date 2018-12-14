@@ -62,7 +62,7 @@ public class GroupController extends Controller {
 
                 Db.save("thegroup", "gro_id", new_group);
                 Group last_create_group = Group.dao.findFirst("select * from thegroup where gro_name=\""+map.get("gro_name").toString()+"\"");
-                Record new_ugr = new Record().set("ugr_user_id",map.get("gro_manager_id")).set("ugr_gro_id",last_create_group.get("gro_id")).set("ugr_permissions",0)
+                Record new_ugr = new Record().set("ugr_user_id",map.get("gro_manager_id")).set("ugr_gro_id",last_create_group.get("gro_id")).set("ugr_permissions",256)
                         .set("ugr_status",1);
                 Db.save("user_group_relation",new_ugr);
                 renderJson("{\"code\":200}");
