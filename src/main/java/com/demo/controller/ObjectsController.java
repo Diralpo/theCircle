@@ -112,9 +112,9 @@ public class ObjectsController extends Controller {
         Map map = new Gson().fromJson(s,Map.class);
         Record new_object = new Record().set("obj_type",map.get("object_type")).set("obj_name",map.get("object_name"))
                 .set("obj_distribution_company",map.get("object_writer")).set("obj_distribution_time",map.get("object_time"))
-                .set("obj_href",map.get("object_get_link")).set("obj_img_href",map.get("object_image_link"))
+                .set("obj_href",map.get("object_website_link")).set("obj_img_href",map.get("object_image_link"))
                 .set("obj_details",map.get("object_introduction")).set("obj_creator_id",map.get("object_creator_id"))
-                .set("obj_status",0);
+                .set("obj_status",0).set("obj_get_href",map.get("object_get_link"));
         try {
             success = Db.save("object", "obj_id", new_object);
         }catch (Exception e){

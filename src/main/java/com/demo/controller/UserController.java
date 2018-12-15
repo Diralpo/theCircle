@@ -20,7 +20,7 @@ import java.util.Map;
 public class UserController extends Controller {
 
     public void index() {
-        redirect("static/login.html");
+        redirect("static/index.html");
     }
 
 

@@ -143,9 +143,6 @@ function jump_to_object(id) {
         contentType: 'application/json; charset=UTF-8',
         success: function (data_return) { //成功的话，得到消息
             var object_data = eval(data_return);
-            console.log("123");
-            console.log(object_data[0]["obj_name"]);
-            console.log(object_data[0]);
             sessionStorage.setItem("obj_id", object_data[0]["obj_id"]);
             sessionStorage.setItem("obj_name", object_data[0]["obj_name"]);
             sessionStorage.setItem("obj_href", object_data[0]["obj_href"]);
