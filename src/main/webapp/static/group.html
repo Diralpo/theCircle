@@ -174,11 +174,11 @@
                 var datares = eval(data_return);
                 for(var i=0;i<datares.length;i++){
                     var content = $(
-                        "<div class='col-lg-3'>"+
+                        "<div class='col-lg-3'  onclick='jump_to_user_index(\""+ datares[i]["u_nickname"] +"\")'>"+
                         "<dl style='margin-top: 30px'> <dt class=\" aw-border-radius-5\" style='margin-left: 30px'>"+
                         "<img class=\"img-responsive\" style=\"width: 30px;height: 30px\" src=\""+datares[i]["u_photo"]+"\" alt=\"\"/> </dt>" +
                         "<dd>" +
-                        "<a class=\"aw-user-name\">"+datares[i]["u_nickname"]+"</a> </dd> </dl> </div>"
+                        "<a class=\"aw-user-name\" >"+datares[i]["u_nickname"]+"</a> </dd> </dl> </div>"
                     );
                     $("#group_users").append(content);
                 }
