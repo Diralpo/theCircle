@@ -68,7 +68,7 @@
                                 <input style="display: inline" id="input_score" name="input_score" class="rating"
                                        value="0">
                                 <button class="btn btn-default" type="button"
-                                        style="background-color:purple; color: white; border: none">提交评分
+                                        style="background-color:purple; color: white; border: none" onclick="submit_score()">提交评分
                                 </button>
                             </form>
                             <script>
@@ -99,8 +99,7 @@
                     <div style="margin-left: 10px">
                         <p>theCircle评分</p>
                         <div>
-                            <strong style="font-size: 30px">
-                                10.0
+                            <strong style="font-size: 30px" id = "item_score">
                             </strong>
                         </div>
                         <button class="btn btn-primary" id="add-focus" onclick="add_focus()">+关注</button>
@@ -270,8 +269,12 @@
                 }
             }
         });
-
-
+        <!--仅用于展示-->
+        var num = Math.random();
+        num=num*3+7;
+        num = num.toFixed(1);
+        $("#item_score").append(num);
+        <!--仅用于展示-->
         refresh_com_list();
         refresh_group_list();
     })

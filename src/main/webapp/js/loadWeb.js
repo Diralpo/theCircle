@@ -157,3 +157,7 @@ function jump_to_object(id) {
         }
     });
 }
+
+function submit_score(){
+    alert("提交评分成功");
+}
