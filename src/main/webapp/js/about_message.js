@@ -81,7 +81,6 @@ function add_message_list(data){
     theroot = theroot.find(".reply-item").last();
     theroot.find(".sender-avatar").attr("onclick", "jump_to_user_index('" + data['u_nickname'] + "')");
     theroot.find(".user-avatar").attr("src", data['u_photo']);
-    alert(data['u_photo']);
     theroot.find(".sender-nickname").text(data['u_nickname']).attr("onclick", "jump_to_user_index('" +
         data['u_nickname'] + "')");
     theroot.find(".message-time").text(data['pm_sending_time']);
