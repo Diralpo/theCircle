@@ -63,7 +63,7 @@ function pop_up_message(thisel){
 function add_message_list(data){
     var child = '<div class="row reply-item">' +
         '                <div class="col-md-1 top-left">' +
-        '                    <a class="sender-avatar"> <img src="../image/favicon.ico" style="width: 100%; height: auto;"/>' +
+        '                    <a class="sender-avatar"> <img class="user-avatar" src="" style="width: 100%; height: auto;"/>' +
         '                    </a>' +
         '                </div>' +
         '                <div class="col-md-11 top-right">' +
@@ -80,6 +80,7 @@ function add_message_list(data){
     var theroot = $('#show_message').append(child);
     theroot = theroot.find(".reply-item").last();
     theroot.find(".sender-avatar").attr("onclick", "jump_to_user_index('" + data['u_nickname'] + "')");
+    theroot.find(".user-avatar").attr("src", data['u_photo']);
     theroot.find(".sender-nickname").text(data['u_nickname']).attr("onclick", "jump_to_user_index('" +
         data['u_nickname'] + "')");
     theroot.find(".message-time").text(data['pm_sending_time']);
