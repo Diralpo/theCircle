@@ -50,7 +50,7 @@ public class MessageController  extends Controller {
             renderJson("{\"code\":400}");
             return ;
         }
-        String sql = "select pm_id, u_nickname,pm_details,pm_sending_time,pm_status from message,users " +
+        String sql = "select pm_id, u_nickname,pm_details,pm_sending_time,pm_status, users.u_photo from message,users " +
                 "where users.u_id=message.pm_sender_id and pm_receiver_id=" + current_user.get("u_id")+
         " order by " +
                 "message.pm_sending_time desc" ;
